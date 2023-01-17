@@ -9,6 +9,7 @@ use App\Models\Employee;
 use App\Models\department;
 use App\Models\User;
 use App\Models\module_permission;
+use App\Models\Subdept;
 // YOHANA NAMBAHIN SENDIRI TRIAL DAFTAR ALL EMPLOYEE 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
@@ -66,10 +67,7 @@ class EmployeeController extends Controller
         ]);
     }
 
-    // public function indexVerifEmp(Request $request) {
-    //     $dept = DB::table('departments')->get();
-    //     return view('form.verifyemployee',compact('dept'));
-    // }
+   
     public function indexVerifEmp(Request $request) {
         $role = DB::table('role_type_users')->get();
         return view('auth.register',compact('role'));
@@ -100,28 +98,7 @@ class EmployeeController extends Controller
         Toastr::success('Create new account successfully :)','Success');
         return redirect('form.regisemployee');
     }
-    // public function verifEmployee(Request $request) {
-    //     DB::beginTransaction();
-
-    //     $request->validate([
-    //         'name'  => 'required|string|max:255',
-    //         'phone_number'  => 'required|string|max:255',
-    //         'email' => 'required|string|email',
-    //         'department'    => 'required|string|max:255',
-    //     ]);
-
-    //     $dt = Carbon::now();
-    //     $todayDate = $dt->toDayDateTimeString();
-
-    //     User::create([
-    //         'name'  => $request->name,
-    //         'phone_number'  => $request->phone_number,
-    //         'email' => $request->email,
-    //         'department' => $request->department,
-    //     ]);
-    //     Toastr::success('Create new account successfully :)','Success');
-    //     return redirect('form.regisemployee');
-    // }
+ 
     
     //+++ YOHANA BIKIN SENDIRI OTAK ATIK +++
 
@@ -520,12 +497,19 @@ class EmployeeController extends Controller
         }
     }
 
-    /** page designations */
-    public function designationsIndex()
+    /** page designations - sub department */
+    public function subdeptIndex()
     {   
-        $dept = DB::table('departments')->get();
-        return view('form.designations',compact('dept'));
+        $subdept = DB::table('subdept')->get();
+        return view('form.designations', compact('subdept'));
     }
+
+    // save record sub department 
+    // public function saveSubdept(Request $request) {
+    //     $request->validate([
+    //         'subdept_name'
+    //     ]);
+    // }
 
     /** page time sheet */
     public function timeSheetIndex()

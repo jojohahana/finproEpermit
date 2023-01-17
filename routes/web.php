@@ -192,9 +192,10 @@ Route::controller(EmployeeController::class)->group(function () {
     Route::get('form/departments/page', 'index')->middleware('auth')->name('form/departments/page');    
     Route::post('form/departments/save', 'saveRecordDepartment')->middleware('auth')->name('form/departments/save');    
     Route::post('form/department/update', 'updateRecordDepartment')->middleware('auth')->name('form/department/update');    
-    Route::post('form/department/delete', 'deleteRecordDepartment')->middleware('auth')->name('form/department/delete');  
+    Route::post('form/department/delete', 'deleteRecordDepartment')->middleware('auth')->name('form/department/delete'); 
     
-    Route::get('form/designations/page', 'designationsIndex')->middleware('auth')->name('form/designations/page');    
+    
+    Route::get('form/designations/page', 'subdeptIndex')->middleware('auth')->name('form/designations/page');    
     Route::post('form/designations/save', 'saveRecordDesignations')->middleware('auth')->name('form/designations/save');    
     Route::post('form/designations/update', 'updateRecordDesignations')->middleware('auth')->name('form/designations/update');    
     Route::post('form/designations/delete', 'deleteRecordDesignations')->middleware('auth')->name('form/designations/delete');
@@ -208,6 +209,11 @@ Route::controller(EmployeeController::class)->group(function () {
     Route::post('form/overtime/save', 'saveRecordOverTime')->middleware('auth')->name('form/overtime/save');    
     Route::post('form/overtime/update', 'updateRecordOverTime')->middleware('auth')->name('form/overtime/update');    
     Route::post('form/overtime/delete', 'deleteRecordOverTime')->middleware('auth')->name('form/overtime/delete');  
+});
+
+// ----------------------------Sub Department Pending Dulu JO -----------------------------------
+Route::controller(SubdeptController::class)->group(function () {
+    Route::get('form/subdept/page', 'indexSubdept')->middleware('auth')->name('form/subdept/page');
 });
 
 // ----------------------------- profile employee ------------------------------//
