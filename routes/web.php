@@ -196,7 +196,7 @@ Route::controller(EmployeeController::class)->group(function () {
     
     
     Route::get('form/designations/page', 'subdeptIndex')->middleware('auth')->name('form/designations/page');    
-    Route::post('form/designations/save', 'saveRecordDesignations')->middleware('auth')->name('form/designations/save');    
+    Route::post('form/designations/save', 'saveSubdept')->middleware('auth')->name('form/designations/save');    
     Route::post('form/designations/update', 'updateRecordDesignations')->middleware('auth')->name('form/designations/update');    
     Route::post('form/designations/delete', 'deleteRecordDesignations')->middleware('auth')->name('form/designations/delete');
     

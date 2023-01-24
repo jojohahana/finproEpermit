@@ -501,15 +501,31 @@ class EmployeeController extends Controller
     public function subdeptIndex()
     {   
         $subdept = DB::table('subdept')->get();
-        return view('form.designations', compact('subdept'));
+        $deptList = DB::table('departments')->get();
+        return view('form.designations', compact('subdept','deptList'));
     }
+    
+    public function saveSubdept(Request $request) {
+        DB::beginTransaction();
+        $request->validate([
+            'subdept_name'      => 'required|string|max:255',
+            'department'        => 'required|string|max:255',
+        ]);
+        try{
+            $subdept = new Subdept;
+            $subdept->subdept_name  = $request->subdept_name;
+            $subdept->department    = $request->department;
+            $subdept->save();
 
-    // save record sub department 
-    // public function saveSubdept(Request $request) {
-    //     $request->validate([
-    //         'subdept_name'
-    //     ]);
-    // }
+            DB::commit();
+            Toastr::success('Create New Sub Dept Successfully :)','Success');
+            return redirect()->route('form/designations/save');
+        }catch(\Exception $e){
+            DB::rollback();
+            Toastr::error('Add New Sub Dept Fail :)','Error');
+            return redirect()->back();
+        }
+    }
 
     /** page time sheet */
     public function timeSheetIndex()

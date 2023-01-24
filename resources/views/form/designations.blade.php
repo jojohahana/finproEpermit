@@ -37,22 +37,25 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($subdept as $key=>$items)
-                                <tr>
-                                    <td>{{ ++$key }}</td>
-                                    <td hidden class="id">{{ $items->id }}</td>
-                                    <td hidden class="subdept_name">{{ $items->subdept_name }}</td>
-                                    <td hidden class="department">{{ $items->department }}</td>
-                                    <td class="text-right"></td>
-                                    <div class="dropdown dropdown-action">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icon">more_vert</i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="#" class="dropdown-item edit_subdept" data-toggle="modal" data-target="#edit_subdept"><i class="fa fa-pencil m-r-5"> Edit</i></a>
-                                            <a href="#" class="dropdown-item delete_subdept" data-toggle="modal" data-target="#delete_subdept"><i class="fa fa-trash-o m-r-5"> Delete</i></a>
+                                @if(!empty($subdept))
+                                    @foreach ($subdept as $key=>$items)
+                                    <tr>
+                                        <td>{{ ++$key }}</td>
+                                        <td hidden class="id">{{ $items->id }}</td>
+                                        <td class="subdept_name">{{ $items->subdept_name }}</td>
+                                        <td class="department">{{ $items->department }}</td>
+                                        <td class="text-right">
+                                        <div class="dropdown dropdown-action">
+                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a href="#" class="dropdown-item edit_subdept" data-toggle="modal" data-target="#edit_subdept"><i class="fa fa-pencil m-r-5"> Edit</i></a>
+                                                <a href="#" class="dropdown-item delete_subdept" data-toggle="modal" data-target="#delete_subdept"><i class="fa fa-trash-o m-r-5"> Delete</i></a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </tr>
-                                @endforeach
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
                     </div>
@@ -72,24 +75,25 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form action="{{ route('form/designations/save') }}" method="POST">
+                            @csrf
                             <div class="form-group">
                                 <label>Sub Department Name <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text">
+                                <input class="form-control @error('subdept') is-invalid @enderror" type="text" id="subdept" name="subdept" value="{{ old('subdept') }}" placeholder="Enter Sub Dept">
+                                <!-- @error('subdept')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror -->
                             </div>
                             <div class="form-group">
                                 <label>Department <span class="text-danger">*</span></label>
                                 <select class="select @error('department') is-invalid @enderror" name="department" id="department">
                                         <option selected disabled>-- Select Department --</option>
-                                        @foreach ($subdept as $name)
-                                            <option value="{{ $name->department }}">{{ $name->subdept }}</option>
+                                        @foreach ($deptList as $dept)
+                                            <option value="{{ $dept->department }}">{{ $dept->department }}</option>
                                         @endforeach
                                     </select>
-                                    @error('subdept')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                             </div>
                             <div class="submit-section">
                                 <button class="btn btn-primary submit-btn">Submit</button>
@@ -102,11 +106,11 @@
         <!-- /Add Designation Modal -->
         
         <!-- Edit Designation Modal -->
-        <div id="edit_designation" class="modal custom-modal fade" role="dialog">
+        <div id="edit_subdept" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Edit Designation</h5>
+                        <h5 class="modal-title">Edit Sub Department</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -114,16 +118,16 @@
                     <div class="modal-body">
                         <form>
                             <div class="form-group">
-                                <label>Designation Name <span class="text-danger">*</span></label>
+                                <label>Sub Department Name <span class="text-danger">*</span></label>
                                 <input class="form-control" value="Web Developer" type="text">
                             </div>
                             <div class="form-group">
                                 <label>Department <span class="text-danger">*</span></label>
-                                <select class="select">
-                                    <option>Select Department</option>
-                                    <option>Web Development</option>
-                                    <option>IT Management</option>
-                                    <option>Marketing</option>
+                                <select class="select" id="select_dept" name="select_dept">
+                                    <option>--Select Department--</option>
+                                    @foreach ($deptList as $dept)
+                                        <option value="{{ $dept->department }}">{{ $dept->department}}</option>    
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="submit-section">
@@ -137,12 +141,12 @@
         <!-- /Edit Designation Modal -->
         
         <!-- Delete Designation Modal -->
-        <div class="modal custom-modal fade" id="delete_designation" role="dialog">
+        <div class="modal custom-modal fade" id="delete_subdept" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">
                         <div class="form-header">
-                            <h3>Delete Designation</h3>
+                            <h3>Delete Sub Department</h3>
                             <p>Are you sure want to delete?</p>
                         </div>
                         <div class="modal-btn delete-action">
