@@ -31,26 +31,26 @@
             <form action="{{ route('all/employee/list/search') }}" method="POST">
                 @csrf
                 <div class="row filter-row">
-                    <div class="col-sm-6 col-md-3">  
+                    <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus">
                             <input type="text" class="form-control floating" name="employee_id">
                             <label class="focus-label">NIK</label>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">  
+                    <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus">
                             <input type="text" class="form-control floating">
                             <label class="focus-label">Employee Name</label>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3"> 
+                    <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus">
                             <input type="text" class="form-control floating">
                             <label class="focus-label">Position</label>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">  
-                        <button type="sumit" class="btn btn-success btn-block"> Search </button>  
+                    <div class="col-sm-6 col-md-3">
+                        <button type="sumit" class="btn btn-success btn-block"> Search </button>
                     </div>
                 </div>
             </form>
@@ -69,7 +69,7 @@
                                     <th>Name</th>
                                     <th>Department</th>
                                     <!-- NIK sebelumnya Employee ID  -->
-                                    <th>NIK</th> 
+                                    <th>NIK</th>
                                     <th>RFID Tag</th>
                                     <th>Email</th>
                                     <th>Mobile</th>
@@ -111,11 +111,11 @@
                         </table>
                     </div>
                 </div>
-            </div> 
+            </div>
             <!-- Yohana Ngulik End  -->
         </div>
         <!-- /Page Content -->
-      
+
         <!-- Add Employee Modal -->
         <div id="add_employee" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -141,7 +141,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                            
+
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Email <span class="text-danger">*</span></label>
@@ -164,11 +164,6 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                        <!-- harusnya dibikin selection  -->
-                                        <!-- <select class="select form-control" id="department" name="department">
-                                            <option value="Male">Dept 1</option>
-                                            <option value="Female">Dept 2</option>
-                                        </select> -->
                                     </div>
                                 </div>
 
@@ -213,14 +208,9 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                        <!-- <select class="select" id="company" name="company">
-                                            <option value="">-- Select --</option>
-                                            <option value="Soeng Souy">Soeng Souy</option>
-                                            <option value="StarGame Kh">StarGame Kh</option>
-                                        </select> -->
                                     </div>
                                 </div>
-                                <div class="col-sm-6">  
+                                <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Nomor Induk Karyawan <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="employee_id" name="employee_id" placeholder="Auto NIK" readonly>
@@ -311,7 +301,7 @@
                                         <input class="form-control @error('company') is-invalid @enderror" type="text" id="company" name="company">
                                     </div>
                                 </div>
-                            
+
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Email <span class="text-danger">*</span></label>
@@ -335,7 +325,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">  
+                                <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Employee ID <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="employee_id" name="employee_id" placeholder="Auto id employee" readonly>
