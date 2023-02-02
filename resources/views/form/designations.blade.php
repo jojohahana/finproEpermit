@@ -75,7 +75,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('form/designations/save') }}" method="POST">
+                        <form action="{{ route('form/designations/save') }}" method="post">
                             @csrf
                             <div class="form-group">
                                 <label>Sub Department Name <span class="text-danger">*</span></label>
@@ -116,10 +116,12 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                    <form action="{{ route('form/designations/update') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id_edit" id="e_id" value="">
                             <div class="form-group">
                                 <label>Sub Department Name <span class="text-danger">*</span></label>
-                                <input class="form-control" value="Web Developer" type="text">
+                                <input class="form-control" id="subdept_edit" name="subdept_name_edit" value="" type="text">
                             </div>
                             <div class="form-group">
                                 <label>Department <span class="text-danger">*</span></label>
@@ -150,14 +152,19 @@
                             <p>Are you sure want to delete?</p>
                         </div>
                         <div class="modal-btn delete-action">
-                            <div class="row">
+                            
+                        <form action="{{ route('form/designations/delete') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" class="e_id" value="">
+                                <div class="row">
                                 <div class="col-6">
-                                    <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+                                <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</button>
                                 </div>
                                 <div class="col-6">
                                     <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                                 </div>
                             </div>
+                        </form>
                         </div>
                     </div>
                 </div>
@@ -169,6 +176,21 @@
     <!-- /Page Wrapper -->
 
     @section('script')
-    
+    <script>
+        $(document).on('click','.edit_subdept',function()
+        {
+            var _this = $(this).parents('tr');
+            $('#e_id').val(_this.find('.id').text());
+            $('#subdept_edit').val(_this.find('.subdept_name').text());
+        });
+    </script>
+
+    <script>
+        $(document).on('click','.delete_subdept',function()
+        {
+            var _this = $(this).parents('tr');
+            $('.e_id').val(_this.find('.id').text());
+        });
+    </script>
     @endsection
 @endsection

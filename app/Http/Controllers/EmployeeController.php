@@ -508,21 +508,58 @@ class EmployeeController extends Controller
     public function saveSubdept(Request $request) {
         DB::beginTransaction();
         $request->validate([
-            'subdept_name'      => 'required|string|max:255',
+            'subdept'      => 'required|string|max:255',
             'department'        => 'required|string|max:255',
         ]);
         try{
             $subdept = new Subdept;
-            $subdept->subdept_name  = $request->subdept_name;
+            $subdept->subdept_name  = $request->subdept;
             $subdept->department    = $request->department;
             $subdept->save();
 
             DB::commit();
             Toastr::success('Create New Sub Dept Successfully :)','Success');
-            return redirect()->route('form/designations/save');
+            return redirect()->route('form/designations/page');
         }catch(\Exception $e){
             DB::rollback();
             Toastr::error('Add New Sub Dept Fail :)','Error');
+            return redirect()->back();
+        }
+    }
+
+    /** delete record sub department */
+    public function deleteSubdept(Request $request) 
+    {
+        try {
+
+            Subdept::destroy($request->id);
+            Toastr::success('Sub Department deleted successfully :)','Success');
+            return redirect()->back();
+        
+        } catch(\Exception $e) {
+
+            DB::rollback();
+            Toastr::error('Sub Department delete fail :)','Error');
+            return redirect()->back();
+        }
+    }
+
+    public function updateSubdept(Request $request) {
+        DB::beginTransaction();
+        try{
+        $subdept=[
+            'subdept_name'      => $request->subdept_name_edit,
+            'department'   => $request->select_dept,
+        ];
+        
+            Subdept::where('id',$request->id_edit)->update($subdept);
+
+            DB::commit();
+            Toastr::success('Update Sub Dept Successfully :)','Success');
+            return redirect()->route('form/designations/page');
+        }catch(\Exception $e){
+            DB::rollback();
+            Toastr::error('Udpate Sub Dept Fail :)','Error');
             return redirect()->back();
         }
     }
