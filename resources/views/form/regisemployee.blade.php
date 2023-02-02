@@ -217,60 +217,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Module Permission Checklist  -->
-                            <div class="table-responsive m-t-15">
-                                <table class="table table-striped custom-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Module Permission</th>
-                                            <th class="text-center">Read</th>
-                                            <th class="text-center">Write</th>
-                                            <th class="text-center">Create</th>
-                                            <th class="text-center">Delete</th>
-                                            <th class="text-center">Import</th>
-                                            <th class="text-center">Export</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                            $key = 0;
-                                            $key1 = 0;
-                                        ?>
-                                        @foreach ($permission_lists as $lists )
-                                        <tr>
-                                            <td>{{ $lists->permission_name }}</td>
-                                            <input type="hidden" name="permission[]" value="{{ $lists->permission_name }}">
-                                            <input type="hidden" name="id_count[]" value="{{ $lists->id }}">
-                                            <td class="text-center">
-                                                <input type="checkbox" class="read{{ ++$key }}" id="read" name="read[]" value="Y"{{ $lists->read =="Y" ? 'checked' : ''}} >
-                                                <input type="checkbox" class="read{{ ++$key1 }}" id="read" name="read[]" value="N" {{ $lists->read =="N" ? 'checked' : ''}}>
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="write{{ ++$key }}" id="write" name="write[]" value="Y" {{ $lists->write =="Y" ? 'checked' : ''}}>
-                                                <input type="checkbox" class="write{{ ++$key1 }}" id="write" name="write[]" value="N" {{ $lists->write =="N" ? 'checked' : ''}}>
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="create{{ ++$key }}" id="create" name="create[]" value="Y" {{ $lists->create =="Y" ? 'checked' : ''}}>
-                                                <input type="checkbox" class="create{{ ++$key1 }}" id="create" name="create[]" value="N" {{ $lists->create =="N" ? 'checked' : ''}}>
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="delete{{ ++$key }}" id="delete" name="delete[]" value="Y" {{ $lists->delete =="Y" ? 'checked' : ''}}>
-                                                <input type="checkbox" class="delete{{ ++$key1 }}" id="delete" name="delete[]" value="N" {{ $lists->delete =="N" ? 'checked' : ''}}>
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="import{{ ++$key }}" id="import" name="import[]" value="Y" {{ $lists->import =="Y" ? 'checked' : ''}}>
-                                                <input type="checkbox" class="import{{ ++$key1 }}" id="import" name="import[]" value="N" {{ $lists->import =="N" ? 'checked' : ''}}>
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="export{{ ++$key }}" id="export" name="export[]" value="Y" {{ $lists->export =="Y" ? 'checked' : ''}}>
-                                                <input type="checkbox" class="export{{ ++$key1 }}" id="export" name="export[]" value="N" {{ $lists->export =="N" ? 'checked' : ''}}>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- Module Permission Checklist End  -->
+
                             <div class="submit-section">
                                 <button class="btn btn-primary submit-btn">Submit</button>
                             </div>
@@ -348,60 +295,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Module Permission Checklist  -->
-                            <div class="table-responsive m-t-15">
-                                <table class="table table-striped custom-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Module Permission</th>
-                                            <th class="text-center">Read</th>
-                                            <th class="text-center">Write</th>
-                                            <th class="text-center">Create</th>
-                                            <th class="text-center">Delete</th>
-                                            <th class="text-center">Import</th>
-                                            <th class="text-center">Export</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                            $key = 0;
-                                            $key1 = 0;
-                                        ?>
-                                        @foreach ($permission_lists as $lists )
-                                        <tr>
-                                            <td>{{ $lists->permission_name }}</td>
-                                            <input type="hidden" name="permission[]" value="{{ $lists->permission_name }}">
-                                            <input type="hidden" name="id_count[]" value="{{ $lists->id }}">
-                                            <td class="text-center">
-                                                <input type="checkbox" class="read{{ ++$key }}" id="read" name="read[]" value="Y"{{ $lists->read =="Y" ? 'checked' : ''}} >
-                                                <input type="checkbox" class="read{{ ++$key1 }}" id="read" name="read[]" value="N" {{ $lists->read =="N" ? 'checked' : ''}}>
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="write{{ ++$key }}" id="write" name="write[]" value="Y" {{ $lists->write =="Y" ? 'checked' : ''}}>
-                                                <input type="checkbox" class="write{{ ++$key1 }}" id="write" name="write[]" value="N" {{ $lists->write =="N" ? 'checked' : ''}}>
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="create{{ ++$key }}" id="create" name="create[]" value="Y" {{ $lists->create =="Y" ? 'checked' : ''}}>
-                                                <input type="checkbox" class="create{{ ++$key1 }}" id="create" name="create[]" value="N" {{ $lists->create =="N" ? 'checked' : ''}}>
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="delete{{ ++$key }}" id="delete" name="delete[]" value="Y" {{ $lists->delete =="Y" ? 'checked' : ''}}>
-                                                <input type="checkbox" class="delete{{ ++$key1 }}" id="delete" name="delete[]" value="N" {{ $lists->delete =="N" ? 'checked' : ''}}>
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="import{{ ++$key }}" id="import" name="import[]" value="Y" {{ $lists->import =="Y" ? 'checked' : ''}}>
-                                                <input type="checkbox" class="import{{ ++$key1 }}" id="import" name="import[]" value="N" {{ $lists->import =="N" ? 'checked' : ''}}>
-                                            </td>
-                                            <td class="text-center">
-                                                <input type="checkbox" class="export{{ ++$key }}" id="export" name="export[]" value="Y" {{ $lists->export =="Y" ? 'checked' : ''}}>
-                                                <input type="checkbox" class="export{{ ++$key1 }}" id="export" name="export[]" value="N" {{ $lists->export =="N" ? 'checked' : ''}}>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- Module Permission Checklist End  -->
+
                             <div class="submit-section">
                                 <button class="btn btn-primary submit-btn">Submit</button>
                             </div>

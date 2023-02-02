@@ -63,7 +63,7 @@
                 <li class="{{set_active(['create/estimate/page','form/estimates/page','payments','expenses/page'])}} submenu">
                     <a href="#" class="{{ set_active(['create/estimate/page','form/estimates/page','payments','expenses/page']) ? 'noti-dot' : '' }}">
                         <i class="la la-files-o"></i>
-                        <span>Data</span> 
+                        <span>Data</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul style="{{ request()->is('/*') ? 'display: block;' : 'display: none;' }}">
@@ -107,7 +107,7 @@
                         <li><a class="{{set_active(['form/performance/appraisal/page'])}}" href="{{ route('form/performance/appraisal/page') }}"> Performance Appraisal </a></li>
                     </ul>
                 </li>
-                <li class="{{set_active(['form/training/list/page','form/trainers/list/page'])}} submenu"> 
+                <li class="{{set_active(['form/training/list/page','form/trainers/list/page'])}} submenu">
                     <a href="#" class="{{ set_active(['form/training/list/page','form/trainers/list/page']) ? 'noti-dot' : '' }}"><i class="la la-edit"></i>
                     <span>Users</span> <span class="menu-arrow"></span></a>
                     <ul style="{{ request()->is('/*') ? 'display: block;' : 'display: none;' }}">
@@ -116,7 +116,7 @@
                         <li><a class="{{set_active(['form/training/type/list/page'])}}" href="{{ route('form/training/type/list/page') }}"> Training Type </a></li>
                     </ul>
                 </li>
-                
+
                 <li class="menu-title"> <span>Administration</span> </li>
                 <li> <a href="assets.html"><i class="la la-object-ungroup">
                     </i> <span>Assets</span></a>
@@ -147,7 +147,7 @@
                     </a>
                     <ul style="display: none;">
                         <!-- <li><a class="{{set_active(['employee/profile/*'])}}" href="{{ route('all/employee/list') }}"> Employee Profile</a></li> -->
-                        <li><a class="{{set_active(['employee/profile/*'])}}" href="{{ route('all/employee/regist') }}">Regist Employee</a></li>
+                        <li><a class="{{set_active(['employee/profile/*'])}}" href="{{ route('all/employee/regist') }}">Regist Administrator</a></li>
                         <li><a class="{{set_active(['employee/profile/*'])}}" href="#">Abaikan Dulu</a></li>
                     </ul>
                 </li>
