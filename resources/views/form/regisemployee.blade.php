@@ -67,6 +67,7 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Position</th>
                                     <th>Department</th>
                                     <!-- NIK sebelumnya Employee ID  -->
                                     <th>NIK</th>
@@ -74,34 +75,29 @@
                                     <th>Email</th>
                                     <th>Mobile</th>
                                     <th class="text-nowrap">Join Date</th>
-                                    <th>Role</th>
                                     <th class="text-right no-sort">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $items )
+                                @foreach ($employee as $items )
                                 <tr>
-                                    <td>
-                                        <h2 class="table-avatar">
-                                            <a href="{{ url('employee/profile/'.$items->user_id) }}" class="avatar"><img alt="" src="{{ URL::to('/assets/images/'. $items->avatar) }}"></a>
-                                            <a href="{{ url('employee/profile/'.$items->user_id) }}">{{ $items->name }}<span>{{ $items->position }}</span></a>
-                                        </h2>
-                                    </td>
-                                    <td>{{ $items->department }}</td>
-                                    <td>{{ $items->user_id }}</td>
-                                    <td>{{ $items->rfid_tag }}</td>
-                                    <td>{{ $items->email }}</td>
-                                    <td>{{ $items->company }}</td>
-                                    <td>{{ $items->join_date }}</td>
-                                    <td>{{ $items->role_name }}</td>
+                                    <td hidden class="id">{{ $items->id }}</td>
+                                    <td class="name_edit">{{ $items->name }}</td>
+                                    <td class="position_edit">{{ $items->position }}</td>
+                                    <td class="department_edit">{{ $items->department }}</td>
+                                    <td class="employee_id_edit">{{ $items->employee_id }}</td>
+                                    <td class="rfid_tag_edit">{{ $items->rfid_tag }}</td>
+                                    <td class="email_edit">{{ $items->email }}</td>
+                                    <td class="phone_number_edit">{{ $items->phone_number }}</td>
+                                    <td class="join_date_edit">{{ $items->join_date }}</td>
                                     <td class="text-right">
                                         <div class="dropdown dropdown-action">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item" href="{{ url('all/employee/view/edit/'.$items->user_id) }}"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                <a class="dropdown-item upd_employee" href="#" data-toggle="modal" data-target="#update_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                                 <!-- Yohana Ngulik Nambahin Button View -->
-                                                <a class="dropdown-item" href="{{ url('all/employee/view/edit/'.$items->user_id) }}"><i class="fa fa-eye m-r-5"></i> View</a>
-                                                <a class="dropdown-item" href="{{url('all/employee/delete/'.$items->user_id)}}"onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                <a class="dropdown-item" href="{{ url('all/employee/view/edit/'.$items->id) }}"><i class="fa fa-eye m-r-5"></i> View</a>
+                                                <a class="dropdown-item" href="{{url('all/employee/delete/'.$items->id)}}"onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                             </div>
                                         </div>
                                     </td>
@@ -127,7 +123,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('all/employee/regist/save') }}" method="POST">
+                        <form action="{{ route('all/employee/save') }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-6">
@@ -156,7 +152,7 @@
                                 </div>
 
                                 <div class="col-sm-6">
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="col-form-label">Department <span class="text-danger">*</span></label>
                                         <input class="form-control @error('email') is-invalid @enderror" type="text" id="department" name="department">
                                         @error('department')
@@ -164,13 +160,25 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label>Department <span class="text-danger">*</span></label>
+                                        <select class="select @error('department') is-invalid @enderror" name="department" id="department">
+                                        <option selected disabled>-- Select Department --</option>
+                                        @foreach ($deptList as $dept)
+                                            <option value="{{ $dept->department }}">{{ $dept->department }}</option>
+                                        @endforeach
+                                    </select>
+                            </div>
                                 </div>
+
+                               
+
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Position <span class="text-danger">*</span></label>
-                                        <input class="form-control @error('email') is-invalid @enderror" type="text" id="position" name="position">
+                                        <input class="form-control @error('position') is-invalid @enderror" type="text" id="position" name="position">
                                         @error('position')
                                             <span class="invalid-feedback" roler="alert">
                                                 <strong>{{ $message }}</strong>
@@ -191,7 +199,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Mobile No</label>
-                                        <input class="form-control @error('name') is-invalid @enderror" type="text" id="phone_number" name="phone_number">
+                                        <input class="form-control @error('phone_number') is-invalid @enderror" type="text" id="phone_number" name="phone_number">
                                         @error('phone_number')
                                             <span class="invalid-feedback" roler="alert">
                                                 <strong>{{ $message }}</strong>
@@ -213,7 +221,7 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Nomor Induk Karyawan <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="employee_id" name="employee_id" placeholder="Auto NIK" readonly>
+                                        <input type="text" class="form-control @error('employee_id') is-invalid @enderror" id="employee_id" name="employee_id" placeholder="NIK">
                                     </div>
                                 </div>
                             </div>
@@ -304,6 +312,123 @@
                 </div>
             </div>
         </div>
+
+        <!-- Update Employee Modal -->
+        <div id="update_employee" class="modal custom-modal fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Update Employee</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('all/employee/update') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id_edit" id="em_id" value="">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Full Name</label>
+                                        <input class="form-control @error('name_edit') is-invalid @enderror" type="text" id="name_edit" name="name_edit">
+                                        @error('name_edit')
+                                            <span class="invalid-feedback" roler="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Email <span class="text-danger">*</span></label>
+                                        <input class="form-control @error('email_edit') is-invalid @enderror" type="email" id="email_edit" name="email_edit" placeholder="contoh@gmail.com">
+                                        @error('email_edit')
+                                            <span class="invalid-feedback" roler="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Department <span class="text-danger">*</span></label>
+                                        <select class="select @error('department_edit') is-invalid @enderror" name="department_edit" id="department_edit">
+                                        <option selected disabled>-- Select Department --</option>
+                                        @foreach ($deptList as $dept)
+                                            <option value="{{ $dept->department }}">{{ $dept->department }}</option>
+                                        @endforeach
+                                    </select>
+                            </div>
+                                </div>
+
+                               
+
+
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Position <span class="text-danger">*</span></label>
+                                        <input class="form-control @error('position_edit') is-invalid @enderror" type="text" id="position_edit" name="position_edit">
+                                        @error('position_edit')
+                                            <span class="invalid-feedback" roler="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                        <!-- harusnya selection  -->
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Join Date</label>
+                                        <div class="cal-icon">
+                                            <input class="form-control datetimepicker" type="text" id="join_date_edit" name="join_date_edit">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Mobile No</label>
+                                        <input class="form-control @error('phone_number_edit') is-invalid @enderror" type="text" id="phone_number_edit" name="phone_number_edit">
+                                        @error('phone_number_edit')
+                                            <span class="invalid-feedback" roler="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">RFID Tag</label>
+                                        <input class="form-control @error('rfid_tag_edit') is-invalid @enderror" type="text" id="rfid_tag_edit" name="rfid_tag_edit">
+                                        @error('rfid_tag_edit')
+                                            <span class="invalid-feedback" roler="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">Nomor Induk Karyawan <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control @error('employee_id_edit') is-invalid @enderror" id="employee_id_edit" name="employee_id_edit" placeholder="NIK" readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="submit-section">
+                                <button class="btn btn-primary submit-btn">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Update Employee Modal -->
+
+        
         <!-- /View Employee Modal -->
     </div>
     <!-- /Page Wrapper -->
@@ -332,5 +457,22 @@
             $('#email').val($(this).find(':selected').data('email'));
         });
     </script>
+
+<script>
+        $(document).on('click','.upd_employee',function()
+        {
+            var _this = $(this).parents('tr');
+            $('#em_id').val(_this.find('.id').text());
+            $('#name_edit').val(_this.find('.name_edit').text());
+            $('#position_edit').val(_this.find('.position_edit').text());
+            $('#department_edit').val(_this.find('.department_edit').text());
+            $('#employee_id_edit').val(_this.find('.employee_id_edit').text());
+            $('#rfid_tag_edit').val(_this.find('.rfid_tag_edit').text());
+            $('#email_edit').val(_this.find('.email_edit').text());
+            $('#phone_number_edit').val(_this.find('.phone_number_edit').text());
+            $('#join_date_edit').val(_this.find('.join_date_edit').text());
+        });
+    </script>
+
     @endsection
 @endsection

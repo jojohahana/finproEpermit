@@ -181,6 +181,7 @@
         {
             var _this = $(this).parents('tr');
             $('#e_id').val(_this.find('.id').text());
+            
             $('#subdept_edit').val(_this.find('.subdept_name').text());
         });
     </script>

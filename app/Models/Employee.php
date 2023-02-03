@@ -8,19 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 {
     use HasFactory;
+    protected $table = 'employee';
     protected $fillable = [
         'name',
         'email',
-        'birth_date',
-        'gender',
-        'employee_id',
-        'company', //ini ditable emoloyee nya harusnya diganti phone number untuk registrasi atau add data employe
-        'holidays',
-        'leaves',
-        'clients',
-        'projects',
-        'tasks',
-        'assets',
-        'timing_sheets',
+        'department',
+        'position',
+        'join_date',
+        'phone_number',
+        'rfid_tag',
+        'employee_id'
     ];
 }
