@@ -15,7 +15,9 @@
                     </a>
                     <ul style="{{ request()->is('/*') ? 'display: block;' : 'display: none;' }}">
                         <li><a class="{{set_active(['home'])}}" href="{{ route('home') }}">Summary Dashboard</a></li>
-                        <li><a class="{{set_active(['form/leaves/new'])}}" href="{{ route('form/leaves/new') }}">Permit Submitted</a></li>
+                        <li><a class="{{set_active(['form/leaves/new'])}}" href="{{ route('form/leaves/new') }}">Leave Permit</a></li>
+                        <li><a class="{{set_active(['form/leaves/new'])}}" href="#">Sick Leave</a></li>
+
                     </ul>
                 </li>
                 @if (Auth::user()->role_name=='Admin')
@@ -46,7 +48,7 @@
                         <!-- <li><a class="{{set_active(['all/employee/list','all/employee/card'])}}" href="{{ route('all/employee/card') }}">All Employees</a></li> -->
                         <!-- <li><a class="{{set_active(['form/holidays/new'])}}" href="{{ route('form/holidays/new') }}">Holidays</a></li> -->
                         <li><a class="{{set_active(['form/leaves/new'])}}" href="{{ route('all/employee/regist') }}">Users Profile
-                            <span class="badge badge-pill bg-primary float-right">1</span></a>
+                            {{-- <span class="badge badge-pill bg-primary float-right">1</span></a> --}}
                         </li>
                         <!-- <li><a class="{{set_active(['form/leavesemployee/new'])}}" href="{{route('form/leavesemployee/new')}}">Leaves (Employee)</a></li> -->
                         <!-- <li><a class="{{set_active(['form/leavesettings/page'])}}" href="{{ route('form/leavesettings/page') }}">Leave Settings</a></li> -->
@@ -146,8 +148,7 @@
                         <span>Admin Profile</span> <span class="menu-arrow"></span>
                     </a>
                     <ul style="display: none;">
-                        <!-- <li><a class="{{set_active(['employee/profile/*'])}}" href="{{ route('all/employee/list') }}"> Employee Profile</a></li> -->
-                        <li><a class="{{set_active(['employee/profile/*'])}}" href="{{ route('all/employee/regist') }}">Regist Administrator</a></li>
+                        <li><a class="{{set_active(['employee/profile/*'])}}" href="{{ route('all/employee/admin_reg') }}">Regist Administrator</a></li>
                         <li><a class="{{set_active(['employee/profile/*'])}}" href="#">Abaikan Dulu</a></li>
                     </ul>
                 </li>

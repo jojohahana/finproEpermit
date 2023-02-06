@@ -9,19 +9,19 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title">Register User E-Permit</h3>
+                        <h3 class="page-title">Register Admin E-Permit</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Users E-Permit</a></li>
-                            <li class="breadcrumb-item active">Regis Users</li>
+                            <li class="breadcrumb-item"><a href="index.html">Admin Profile</a></li>
+                            <li class="breadcrumb-item active">Regis Admin</li>
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
-                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Regis Employee</a>
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Regis Admin</a>
                         <!-- YOHANA NGULIK RUBAH ROUTE NYA  -->
-                        <div class="view-icons">
+                        {{-- <div class="view-icons">
                             <a href="{{ route('all/employee/regist') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
                             <a href="{{ route('all/employee/regist') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -66,13 +66,14 @@
                         <table class="table table-striped custom-table datatable">
                             <thead>
                                 <tr>
+                                    <th>NIK</th>
                                     <th>Name</th>
                                     <th>Position</th>
-                                    <th>Department</th>
-                                    <th>NIK</th>
-                                    <th>RFID Tag</th>
-                                    <th>Email</th>
+                                    <th>Dept</th>
                                     <th>Mobile</th>
+                                    <th>Rfid Tag</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
                                     <th class="text-nowrap">Join Date</th>
                                     <th class="text-right no-sort">Action</th>
                                 </tr>
@@ -81,14 +82,16 @@
                                 @foreach ($employee as $items )
                                 <tr>
                                     <td hidden class="id">{{ $items->id }}</td>
-                                    <td class="name_edit">{{ $items->name }}</td>
-                                    <td class="position_edit">{{ $items->position }}</td>
-                                    <td class="department_edit">{{ $items->department }}</td>
-                                    <td class="employee_id_edit">{{ $items->employee_id }}</td>
-                                    <td class="rfid_tag_edit">{{ $items->rfid_tag }}</td>
+                                    <td class="nik_edit">{{ $items->employee_id }}</td>
+                                    <td class="nameAdmin_edit">{{ $items->name }}</td>
+                                    <td class="positionAdmin_edit">{{ $items->position }}</td>
+                                    <td class="deptAdmin_edit">{{ $items->department }}</td>
+                                    <td class="phoneNum_edit">{{ $items->phone_number }}</td>
+                                    <td class="rfidTag_edit">{{ $items->rfid_tag }}</td>
                                     <td class="email_edit">{{ $items->email }}</td>
-                                    <td class="phone_number_edit">{{ $items->phone_number }}</td>
-                                    <td class="join_date_edit">{{ $items->join_date }}</td>
+                                    <td class="role_type_edit">{{ $items->role_type }}</td>
+                                    <td class="joindateAdm_edit">{{ $items->join_date }}</td>
+                                    {{-- <td class="phone_number_edit">{{ $items->phone_number }}</td> --}}
                                     <td class="text-right">
                                         <div class="dropdown dropdown-action">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -116,19 +119,19 @@
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Add Regis Employee</h5>
+                        <h5 class="modal-title">Add Administrator</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('all/employee/save') }}" method="POST">
+                        <form action="{{ route('all/employee/admin_reg/save') }}" method="post">
                             @csrf
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Full Name</label>
-                                        <input class="form-control @error('name') is-invalid @enderror" type="text" id="name" name="name">
+                                        <label class="col-form-label">Name <span class="text-danger">*</span></label>
+                                        <input class="form-control @error('name') is-invalid @enderror" type="text" id="name" name="name" autofocus>
                                         @error('name')
                                             <span class="invalid-feedback" roler="alert">
                                                 <strong>{{ $message }}</strong>
@@ -158,7 +161,7 @@
                                             <option value="{{ $dept->department }}">{{ $dept->department }}</option>
                                         @endforeach
                                     </select>
-                            </div>
+                                    </div>
                                 </div>
 
                                 <div class="col-sm-6">
@@ -175,7 +178,7 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Join Date</label>
+                                        <label>Join Date <span class="text-danger">*</span></label>
                                         <div class="cal-icon">
                                             <input class="form-control datetimepicker" type="text" id="join_date" name="join_date">
                                         </div>
@@ -183,7 +186,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Mobile No</label>
+                                        <label>Mobile No <span class="text-danger">*</span></label>
                                         <input class="form-control @error('phone_number') is-invalid @enderror" type="text" id="phone_number" name="phone_number">
                                         @error('phone_number')
                                             <span class="invalid-feedback" roler="alert">
@@ -194,13 +197,24 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Nomor Induk Karyawan <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control @error('employee_id') is-invalid @enderror" id="employee_id" name="employee_id" placeholder="NIK">
+                                        <label class="col-form-label">NIK <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control @error('employee_id') is-invalid @enderror" id="employee_id" name="employee_id" placeholder="1234">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">RFID Tag</label>
+                                        <label class="col-form-label">Role <span class="text-danger">*</span></label>
+                                        <select class="select @error('role_type') is-invalid @enderror" name="role_type" id="role_type">
+                                            <option selected disabled>-- Select Role --</option>
+                                            @foreach ($roleList as $role)
+                                            <option value="{{ $role->role_type }}">{{ $role->role_type }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">RFID Tag <span class="text-danger">*</span></label>
                                         <input class="form-control @error('rfid_tag') is-invalid @enderror" type="text" id="rfid_tag" name="rfid_tag">
                                         @error('rfid_tag')
                                             <span class="invalid-feedback" roler="alert">
@@ -303,7 +317,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Update Employee</h5>
+                        <h5 class="modal-title">Update Administrator</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -348,6 +362,9 @@
                                     </select>
                             </div>
                                 </div>
+
+
+
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
@@ -415,6 +432,30 @@
     </div>
     <!-- /Page Wrapper -->
     @section('script')
+    {{-- <script>
+        $("input:checkbox").on('click', function()
+        {
+            var $box = $(this);
+            if ($box.is(":checked"))
+            {
+                var group = "input:checkbox[class='" + $box.attr("class") + "']";
+                $(group).prop("checked", false);
+                $box.prop("checked", true);
+            }
+            else
+            {
+                $box.prop("checked", false);
+            }
+        });
+    </script> --}}
+    {{-- <script>
+        // select auto id and email
+        $('#name').on('change',function()
+        {
+            $('#employee_id').val($(this).find(':selected').data('employee_id'));
+            $('#email').val($(this).find(':selected').data('email'));
+        });
+    </script> --}}
 
 <script>
         $(document).on('click','.upd_employee',function()

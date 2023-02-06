@@ -8,12 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class LeavesAdmin extends Model
 {
     use HasFactory;
+    protected $table = 'leaves_admin';
     protected $fillable = [
         'user_id',
         'leave_type',
         'from_date',
         'to_date',
         'day',
+        'data_status',
         'leave_reason',
     ];
 }

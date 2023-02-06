@@ -1,12 +1,12 @@
 @extends('layouts.master')
 @section('content')
-  
+
     <!-- Page Wrapper -->
     <div class="page-wrapper">
-    
+
         <!-- Page Content -->
         <div class="content container-fluid">
-        
+
             <!-- Page Header -->
             <div class="page-header">
                 <div class="row align-items-center">
@@ -93,7 +93,7 @@
                                         @foreach ($deptList as $dept)
                                             <option value="{{ $dept->department }}">{{ $dept->department }}</option>
                                         @endforeach
-                                    </select>
+                                </select>
                             </div>
                             <div class="submit-section">
                                 <button class="btn btn-primary submit-btn">Submit</button>
@@ -104,7 +104,7 @@
             </div>
         </div>
         <!-- /Add Designation Modal -->
-        
+
         <!-- Edit Designation Modal -->
         <div id="edit_subdept" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -128,7 +128,7 @@
                                 <select class="select" id="select_dept" name="select_dept">
                                     <option>--Select Department--</option>
                                     @foreach ($deptList as $dept)
-                                        <option value="{{ $dept->department }}">{{ $dept->department}}</option>    
+                                        <option value="{{ $dept->department }}">{{ $dept->department}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -141,7 +141,7 @@
             </div>
         </div>
         <!-- /Edit Designation Modal -->
-        
+
         <!-- Delete Designation Modal -->
         <div class="modal custom-modal fade" id="delete_subdept" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
@@ -152,7 +152,7 @@
                             <p>Are you sure want to delete?</p>
                         </div>
                         <div class="modal-btn delete-action">
-                            
+
                         <form action="{{ route('form/designations/delete') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="id" class="e_id" value="">
@@ -171,7 +171,7 @@
             </div>
         </div>
         <!-- /Delete Designation Modal -->
-    
+
     </div>
     <!-- /Page Wrapper -->
 
@@ -181,7 +181,7 @@
         {
             var _this = $(this).parents('tr');
             $('#e_id').val(_this.find('.id').text());
-            
+
             $('#subdept_edit').val(_this.find('.subdept_name').text());
         });
     </script>

@@ -10,33 +10,18 @@ use App\Models\department;
 use App\Models\User;
 use App\Models\module_permission;
 use App\Models\Subdept;
-// YOHANA NAMBAHIN SENDIRI TRIAL DAFTAR ALL EMPLOYEE 
+use App\Models\roleTypeUser;
+// YOHANA NAMBAHIN SENDIRI TRIAL DAFTAR ALL EMPLOYEE
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class EmployeeController extends Controller
 {
+    /* ++++ FIX CONTROLLER ++++ */
 
-    // all employee card view
-    public function cardAllEmployee(Request $request)
-    {
-        $employee = DB::table('employee')->where('data_status', '=','ACTIVE')->get();
-        $userList = DB::table('users')->get();
-        $permission_lists = DB::table('permission_lists')->get();
-        return view('form.allemployeecard',compact('employee','userList','permission_lists'));
-    }
-    // all employee list
-    // Yohana Ngulik 
-    public function listAllEmployee()
-    {
-        $employee = DB::table('employee')->where('data_status', '=','ACTIVE')->get();
-        $userList = DB::table('users')->get();
-        $permission_lists = DB::table('permission_lists')->get();
-        return view('form.employeelist',compact('employee','userList','permission_lists'));
-    }
+        // ===== REGISTER USERS E-PERMIT | KARYAWAN =====
 
-    // ++++ YOHANA BIKIN SENDIRI +++
-    // Yohana Ngulik - Trial bikin function untuk regis employee 
+    // 1. INDEX PAGE REGISTER USERS
     public function daftarAllEmployee() {
         $employee = DB::table('employee')->where('data_status', '=','ACTIVE')->get();
         $userList = DB::table('users')->get();
@@ -45,58 +30,8 @@ class EmployeeController extends Controller
         return view('form.regisemployee',compact('employee','userList','permission_lists','deptList'));
     }
 
-    public function saveRegisEmployee(Request $request) {
-        DB::beginTransaction();
-
-        $request->validate([
-            'name'          =>'required|string|max:255',
-            'email'         =>'required|string|email',
-            'department'    =>'required|string|max:255',
-            'position'      =>'required|string|max:255',
-            'join_date'     =>'required|string|max:255',
-            'phone_number'  =>'required|string|max:255',
-            'rfid_tag'      =>'required|string|max:255',
-            'employee_id'   =>'required|string|max:255',
-        ]);
-    }
-
-   
-    public function indexVerifEmp(Request $request) {
-        $role = DB::table('role_type_users')->get();
-        return view('auth.register',compact('role'));
-    }
-
-
-    public function verifEmployee(Request $request) {
-        $request->validate([
-            'name'      => 'required|string|max:255',
-            'email'     => 'required|string|email|max:255|unique:users',
-            'role_name' => 'required|string|max:255',
-            'password'  => 'required|string|min:8|confirmed',
-            'password_confirmation' => 'required',
-        ]);
-
-        $dt       = Carbon::now();
-        $todayDate = $dt->toDayDateTimeString();
-        
-        User::create([
-            'name'      => $request->name,
-            'avatar'    => $request->image,
-            'email'     => $request->email,
-            'join_date' => $todayDate,
-            'role_name' => $request->role_name,
-            'status'    => 'Active',
-            'password'  => Hash::make($request->password),
-        ]);
-        Toastr::success('Create new account successfully :)','Success');
-        return redirect('form.regisemployee');
-    }
- 
-    
-    //+++ YOHANA BIKIN SENDIRI OTAK ATIK +++
-
-    // save data employee
-    public function saveRecord(Request $request) //Yohana Ngulik
+    // 2. SAVE DATA REGISTER USERS
+    public function saveRecord(Request $request)
     {
         $request->validate([
             'name'          => 'required|string|max:255',
@@ -105,18 +40,15 @@ class EmployeeController extends Controller
             'position'      => 'required|string|max:255',
             'join_date'     => 'required|string|max:255',
             'phone_number'  => 'required|string|max:255',
-            'rfid_tag'      => 'required|string|max:255',
             'employee_id'   => 'required|string|max:255',
+            'rfid_tag'      => 'required|string|max:255',
         ]);
 
-        // DB::beginTransaction();
-        // try{
 
-            $employee = Employee::where('email', '=',$request->email)->first();
+            $employee = Employee::where('employee_id', '=',$request->employee_id)->first();
+            // $employee = Employee::where('email', '=',$request->email)->first();
             if ($employee === null)
             {
-
-
                 $employee = new Employee;
                 $employee->name         = $request->name;
                 $employee->email        = $request->email;
@@ -125,26 +57,10 @@ class EmployeeController extends Controller
                 $joindate = $request->join_date;
                 $employee->join_date    = Carbon::parse($joindate)->format('Y-m-d');
                 $employee->phone_number = $request->phone_number;
-                $employee->rfid_tag     = $request->rfid_tag;
                 $employee->employee_id  = $request->employee_id;
+                $employee->rfid_tag     = $request->rfid_tag;
                 $employee->save();
-    
-                // for($i=0;$i<count($request->id_count);$i++)
-                // {
-                //     $module_permissions = [
-                //         'employee_id' => $request->employee_id,
-                //         'module_permission' => $request->permission[$i],
-                //         'id_count'          => $request->id_count[$i],
-                //         'read'              => $request->read[$i],
-                //         'write'             => $request->write[$i],
-                //         'create'            => $request->create[$i],
-                //         'delete'            => $request->delete[$i],
-                //         'import'            => $request->import[$i],
-                //         'export'            => $request->export[$i],
-                //     ];
-                //     DB::table('module_permissions')->insert($module_permissions);
-                // }
-                
+
                 // DB::commit();
                 Toastr::success('Add new employee successfully :)','Success');
                 return redirect()->route('all/employee/regist'); //ketiksa save rollback nya ke employee card
@@ -153,24 +69,9 @@ class EmployeeController extends Controller
                 Toastr::error('Add new employee exits :)','Error');
                 return redirect()->back();
             }
-        // }catch(\Exception $e){
-        //     DB::rollback();
-        //     Toastr::error('Add new employee fail :)','Error');
-        //     return redirect()->back();
-        // }
     }
-    // view edit record
-    public function viewRecord($employee_id)
-    {
-        $permission = DB::table('employee')
-            ->join('module_permissions', 'employee.employee_id', '=', 'module_permission.employee_id')
-            ->select('employee.*', 'module_permissions.*')
-            ->where('employee.employee_id','=',$employee_id)
-            ->get();
-        $employee = DB::table('employee')->where('employee_id',$employee_id)->get();
-        return view('form.edit.editemployee',compact('employee','permission'));
-    }
-    // update record employee
+
+    // 3. EDIT & UPDATA USERS
     public function updateRecord( Request $request)
     {
         DB::beginTransaction();
@@ -184,33 +85,10 @@ class EmployeeController extends Controller
                 'email'=>$request->email_edit,
                 'phone_number'=>$request->phone_number_edit,
             ];
-            // update table user
-            // $updateUser = [
-            //     'id'=>$request->id,
-            //     'name'=>$request->name,
-            //     'email'=>$request->email,
-            // ];
-
-            // // update table module_permissions
-            // for($i=0;$i<count($request->id_permission);$i++)
-            // {
-            //     $UpdateModule_permissions = [
-            //         'employee_id' => $request->employee_id,
-            //         'module_permission' => $request->permission[$i],
-            //         'id'                => $request->id_permission[$i],
-            //         'read'              => $request->read[$i],
-            //         'write'             => $request->write[$i],
-            //         'create'            => $request->create[$i],
-            //         'delete'            => $request->delete[$i],
-            //         'import'            => $request->import[$i],
-            //         'export'            => $request->export[$i],
-            //     ];
-            //     module_permission::where('id',$request->id_permission[$i])->update($UpdateModule_permissions);
-            // }
 
             // User::where('id',$request->id)->update($updateUser);
             Employee::where('id',$request->id_edit)->update($updateEmployee);
-        
+
             DB::commit();
             Toastr::success('updated Employee successfully :)','Success');
             return redirect()->route('all/employee/regist');
@@ -220,7 +98,8 @@ class EmployeeController extends Controller
             return redirect()->back();
         }
     }
-    // delete record
+
+    // 4. DELETE & NON ACTIVE USERS
     public function deleteRecord($employee_id)
     {
         DB::beginTransaction();
@@ -239,6 +118,141 @@ class EmployeeController extends Controller
             return redirect()->back();
         }
     }
+
+    //  5. VIEW DATA USERS
+    public function viewRecord($employee_id)
+    {
+        $permission = DB::table('employee')
+            ->join('module_permissions', 'employee.employee_id', '=', 'module_permission.employee_id')
+            ->select('employee.*', 'module_permissions.*')
+            ->where('employee.employee_id','=',$employee_id)
+            ->get();
+        $employee = DB::table('employee')->where('employee_id',$employee_id)->get();
+        return view('form.edit.editemployee',compact('employee','permission'));
+    }
+
+        // ===== REGISTER USERS E-PERMIT | KARYAWAN =====
+
+    // 1. INDEX PAGE REGIS ADMIN
+   public function indexRegAdmin() {
+    $employee = DB::table('employee')
+        ->where('data_status', '=','ACTIVE')
+        ->where('role_type','!=','') //only view having role_type
+        ->get();
+        $userList = DB::table('users')->get();
+        $deptList = DB::table('departments')->get();
+        $roleList = DB::table('role_type_users')->get();
+        // $permission_lists = DB::table('permission_lists')->get();
+        return view('form.regisadmin',compact('employee','userList','deptList','roleList'));
+   }
+
+    //  2. ADD + SAVE REGIS ADMIN
+   public function saveAdmin(Request $request) {
+    DB::beginTransaction();
+
+    $request->validate([
+        'employee_id'   => 'required|string|max:4',
+        'name'          => 'required|string|max:100',
+        'department'    => 'required|string|max:100',
+        'position'      => 'required|string|max:100',
+        'join_date'     => 'required|string|max:100',
+        'phone_number'  => 'required|string|max:100',
+        'email'         => 'required|string|email',
+        'role_type'     => 'required|string|max:100',
+        'rfid_tag'      => 'required|string|max:100',
+    ]);
+
+    $admin = Employee::where('role_type', '=',$request->role_type)->first();
+    if ($admin === null) {
+        $admin = new Employee;
+        $admin->employee_id     = $request->employee_id;
+        $admin->name            = $request->name;
+        $admin->department      = $request->department;
+        $admin->position        = $request->position;
+        $joindate               = $request->join_date;
+        $admin->join_date       = Carbon::parse($joindate)->format('Y-m-d');
+        $admin->phone_number    = $request->phone_number;
+        $admin->email           = $request->email;
+        $admin->role_type       = $request->role_type;
+        $admin->rfid_tag        = $request->rfid_tag;
+        $admin->save();
+
+        DB::commit();
+        Toastr::success('Add new Administrator successfully :)','Success');
+        return redirect()->route('all/employee/admin_reg');
+    } else {
+        DB::rollback();
+        Toastr::error('Add new Administrator exits :)','Error');
+        return redirect()->back();
+    }
+
+   }
+
+    //3. EDIT & UPDATE USERS
+    public function updateAdmin(Request $request) {
+        DB::beginTransaction();
+        try{
+            $updateAdmin = [
+                'name'=>$request->nameAdmin_edit,
+                'department'=>$request->deptAdmin_edit,
+                'position'=>$request->positionAdmin_edit,
+                'join_date'=>$request->joindateAdm_edit,
+                'phone_number'=>$request->phoneNum_edit,
+                'role_type'=>$request->role_type_edit,
+            ];
+        }catch(\Exception $e){
+            DB::rollback();
+            Toastr::error('updated record fail :)','Error');
+            return redirect()->back();
+        }
+    }
+
+    // all employee card view
+    // public function cardAllEmployee(Request $request)
+    // {
+    //     $employee = DB::table('employee')->where('data_status', '=','ACTIVE')->get();
+    //     $userList = DB::table('users')->get();
+    //     $permission_lists = DB::table('permission_lists')->get();
+    //     return view('form.allemployeecard',compact('employee','userList','permission_lists'));
+    // }
+    // all employee list
+    // Yohana Ngulik
+    // public function listAllEmployee()
+    // {
+    //     $employee = DB::table('employee')->where('data_status', '=','ACTIVE')->get();
+    //     $userList = DB::table('users')->get();
+    //     $permission_lists = DB::table('permission_lists')->get();
+    //     return view('form.employeelist',compact('employee','userList','permission_lists'));
+    // }
+
+    // ++++ YOHANA BIKIN SENDIRI +++
+    // Yohana Ngulik - Trial bikin function untuk regis employee
+
+
+    // public function saveRegisEmployee(Request $request) {
+    //     DB::beginTransaction();
+
+    //     $request->validate([
+    //         'name'          =>'required|string|max:255',
+    //         'email'         =>'required|string|email',
+    //         'department'    =>'required|string|max:255',
+    //         'position'      =>'required|string|max:255',
+    //         'join_date'     =>'required|string|max:255',
+    //         'phone_number'  =>'required|string|max:255',
+    //         'rfid_tag'      =>'required|string|max:255',
+    //         'employee_id'   =>'required|string|max:4',
+    //     ]);
+    // }
+
+
+
+
+
+
+
+
+
+
     // employee search
     public function employeeearch(Request $request)
     {
@@ -325,7 +339,7 @@ class EmployeeController extends Controller
         $users = DB::table('users')
                     ->join('employee', 'users.user_id', '=', 'employee.employee_id')
                     ->select('users.*', 'employee.birth_date', 'employee.gender', 'employee.company')
-                    ->get(); 
+                    ->get();
         $permission_lists = DB::table('permission_lists')->get();
         $userList = DB::table('users')->get();
 
@@ -413,7 +427,7 @@ class EmployeeController extends Controller
                 ->leftJoin('personal_information','personal_information.user_id','users.user_id')
                 ->leftJoin('profile_information','profile_information.user_id','users.user_id')
                 ->where('users.user_id',$user_id)
-                ->get(); 
+                ->get();
         return view('form.employeeprofile',compact('user','users'));
     }
 
@@ -440,7 +454,7 @@ class EmployeeController extends Controller
                 $department = new department;
                 $department->department = $request->department;
                 $department->save();
-    
+
                 DB::commit();
                 Toastr::success('Add new department successfully :)','Success');
                 return redirect()->route('form/departments/page');
@@ -467,7 +481,7 @@ class EmployeeController extends Controller
                 'department'=>$request->department,
             ];
             department::where('id',$request->id)->update($department);
-        
+
             DB::commit();
             Toastr::success('updated record successfully :)','Success');
             return redirect()->route('form/departments/page');
@@ -479,14 +493,14 @@ class EmployeeController extends Controller
     }
 
     /** delete record department */
-    public function deleteRecordDepartment(Request $request) 
+    public function deleteRecordDepartment(Request $request)
     {
         try {
 
             department::destroy($request->id);
             Toastr::success('Department deleted successfully :)','Success');
             return redirect()->back();
-        
+
         } catch(\Exception $e) {
 
             DB::rollback();
@@ -497,12 +511,12 @@ class EmployeeController extends Controller
 
     /** page designations - sub department */
     public function subdeptIndex()
-    {   
+    {
         $subdept = DB::table('subdept')->get();
         $deptList = DB::table('departments')->get();
         return view('form.designations', compact('subdept','deptList'));
     }
-    
+
     public function saveSubdept(Request $request) {
         DB::beginTransaction();
         $request->validate([
@@ -526,14 +540,18 @@ class EmployeeController extends Controller
     }
 
     /** delete record sub department */
-    public function deleteSubdept(Request $request) 
+    public function deleteSubdept(Request $request)
     {
+        DB::beginTransaction();
         try {
 
-            Subdept::destroy($request->id);
+            Subdept::where('id',$request->id)
+            ->update(['data_status' => 'NOT ACTIVE']);
+
+            DB::commit();
             Toastr::success('Sub Department deleted successfully :)','Success');
-            return redirect()->back();
-        
+            return redirect()->route('form/designations/page');
+
         } catch(\Exception $e) {
 
             DB::rollback();
@@ -549,7 +567,7 @@ class EmployeeController extends Controller
             'subdept_name'      => $request->subdept_name_edit,
             'department'   => $request->select_dept,
         ];
-        
+
             Subdept::where('id',$request->id_edit)->update($subdept);
 
             DB::commit();

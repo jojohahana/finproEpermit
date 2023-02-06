@@ -14,8 +14,9 @@ class LeavesController extends Controller
     public function leaves()
     {
         $leaves = DB::table('leaves_admins')
-                    ->join('users', 'users.user_id', '=', 'leaves_admins.user_id')
-                    ->select('leaves_admins.*', 'users.position','users.name','users.avatar')
+                    ->join('employee', 'employee.employee_id', '=', 'leaves_admins.user_id')
+                    ->select('leaves_admins.*', 'employee.position','employee.name','employee.department')
+                    ->where('leaves_admins.data_status','=','ACTIVE')
                     ->get();
 
         return view('form.leaves',compact('leaves'));
@@ -46,7 +47,7 @@ class LeavesController extends Controller
             $leaves->day           = $days;
             $leaves->leave_reason  = $request->leave_reason;
             $leaves->save();
-            
+
             DB::commit();
             Toastr::success('Create new Leaves successfully :)','Success');
             return redirect()->back();
@@ -96,7 +97,7 @@ class LeavesController extends Controller
             LeavesAdmin::destroy($request->id);
             Toastr::success('Leaves admin deleted successfully :)','Success');
             return redirect()->back();
-        
+
         } catch(\Exception $e) {
 
             DB::rollback();

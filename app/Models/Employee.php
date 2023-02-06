@@ -17,6 +17,7 @@ class Employee extends Model
         'join_date',
         'phone_number',
         'rfid_tag',
+        'role_type',
         'employee_id'
     ];
 }
