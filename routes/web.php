@@ -222,6 +222,18 @@ Route::controller(EmployeeController::class)->group(function () {
     Route::post('form/overtime/delete', 'deleteRecordOverTime')->middleware('auth')->name('form/overtime/delete');
 });
 
+// -------------------- PENGAJUAN CUTI | IZIN SAKIT  -------------------------//
+Route::controller(LeavesController::class)->group(function () {
+    // Izin Cuti
+    Route::get('form/leaves/new', 'leaves')->middleware('auth')->name('form/leaves/new');
+    // Izin Sakit
+    Route::get('form/leaves_sick', 'sick_leaves')->middleware('auth')->name('form/leaves_sick');
+    Route::get('form/leavesemployee/new', 'leavesEmployee')->middleware('auth')->name('form/leavesemployee/new');
+    Route::post('form/leaves/save', 'saveRecord')->middleware('auth')->name('form/leaves/save');
+    Route::post('form/leaves/edit', 'editRecordLeave')->middleware('auth')->name('form/leaves/edit');
+    Route::post('form/leaves/edit/delete','deleteLeave')->middleware('auth')->name('form/leaves/edit/delete');
+});
+
 // ----------------------------Sub Department Pending Dulu JO -----------------------------------
 Route::controller(SubdeptController::class)->group(function () {
     Route::get('form/subdept/page', 'indexSubdept')->middleware('auth')->name('form/subdept/page');
@@ -239,14 +251,6 @@ Route::controller(HolidayController::class)->group(function () {
     Route::post('form/holidays/update', 'updateRecord')->middleware('auth')->name('form/holidays/update');
 });
 
-// ----------------------------- form leaves ------------------------------//
-Route::controller(LeavesController::class)->group(function () {
-    Route::get('form/leaves/new', 'leaves')->middleware('auth')->name('form/leaves/new');
-    Route::get('form/leavesemployee/new', 'leavesEmployee')->middleware('auth')->name('form/leavesemployee/new');
-    Route::post('form/leaves/save', 'saveRecord')->middleware('auth')->name('form/leaves/save');
-    Route::post('form/leaves/edit', 'editRecordLeave')->middleware('auth')->name('form/leaves/edit');
-    Route::post('form/leaves/edit/delete','deleteLeave')->middleware('auth')->name('form/leaves/edit/delete');
-});
 
 // ----------------------------- form attendance  ------------------------------//
 Route::controller(LeavesController::class)->group(function () {

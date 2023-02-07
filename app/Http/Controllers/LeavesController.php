@@ -5,106 +5,117 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\LeavesAdmin;
+use App\Models\LeavesSick;
 use DB;
 use DateTime;
 
 class LeavesController extends Controller
 {
-    // leaves
+    // ++++++ LEAVES PERMIT | CUTI ++++++
+    // 1. INDEX CUTI KARYAWAN
     public function leaves()
     {
-        $leaves = DB::table('leaves_admins')
-                    ->join('employee', 'employee.employee_id', '=', 'leaves_admins.user_id')
-                    ->select('leaves_admins.*', 'employee.position','employee.name','employee.department')
-                    ->where('leaves_admins.data_status','=','ACTIVE')
+        $leaves = DB::table('leaves_admin')
+                    ->join('employee', 'employee.employee_id', '=', 'leaves_admin.user_id')
+                    ->select('leaves_admin.*', 'employee.position','employee.name','employee.department')
+                    ->where('leaves_admin.data_status','=','ACTIVE')
                     ->get();
 
         return view('form.leaves',compact('leaves'));
     }
-    // save record
-    public function saveRecord(Request $request)
-    {
-        $request->validate([
-            'leave_type'   => 'required|string|max:255',
-            'from_date'    => 'required|string|max:255',
-            'to_date'      => 'required|string|max:255',
-            'leave_reason' => 'required|string|max:255',
-        ]);
 
-        DB::beginTransaction();
-        try {
-
-            $from_date = new DateTime($request->from_date);
-            $to_date = new DateTime($request->to_date);
-            $day     = $from_date->diff($to_date);
-            $days    = $day->d;
-
-            $leaves = new LeavesAdmin;
-            $leaves->user_id        = $request->user_id;
-            $leaves->leave_type    = $request->leave_type;
-            $leaves->from_date     = $request->from_date;
-            $leaves->to_date       = $request->to_date;
-            $leaves->day           = $days;
-            $leaves->leave_reason  = $request->leave_reason;
-            $leaves->save();
-
-            DB::commit();
-            Toastr::success('Create new Leaves successfully :)','Success');
-            return redirect()->back();
-        } catch(\Exception $e) {
-            DB::rollback();
-            Toastr::error('Add Leaves fail :)','Error');
-            return redirect()->back();
-        }
+    public function sick_leaves() {
+        $sick = DB::table('leaves_sick')
+                ->join('employee', 'employee.employee_id', '=', 'leaves_sick.user_id')
+                ->select('leaves_sick.*', 'employee.position', 'employee.name', 'employee.department')
+                ->where('leaves_sick.data_status','=','ACTIVE')
+                ->get();
+        return view('form.leavesSick',compact('sick'));
     }
+    // save record
+    // public function saveRecord(Request $request)
+    // {
+    //     $request->validate([
+    //         'leave_type'   => 'required|string|max:255',
+    //         'from_date'    => 'required|string|max:255',
+    //         'to_date'      => 'required|string|max:255',
+    //         'leave_reason' => 'required|string|max:255',
+    //     ]);
+
+    //     DB::beginTransaction();
+    //     try {
+
+    //         $from_date = new DateTime($request->from_date);
+    //         $to_date = new DateTime($request->to_date);
+    //         $day     = $from_date->diff($to_date);
+    //         $days    = $day->d;
+
+    //         $leaves = new LeavesAdmin;
+    //         $leaves->user_id        = $request->user_id;
+    //         $leaves->leave_type    = $request->leave_type;
+    //         $leaves->from_date     = $request->from_date;
+    //         $leaves->to_date       = $request->to_date;
+    //         $leaves->day           = $days;
+    //         $leaves->leave_reason  = $request->leave_reason;
+    //         $leaves->save();
+
+    //         DB::commit();
+    //         Toastr::success('Create new Leaves successfully :)','Success');
+    //         return redirect()->back();
+    //     } catch(\Exception $e) {
+    //         DB::rollback();
+    //         Toastr::error('Add Leaves fail :)','Error');
+    //         return redirect()->back();
+    //     }
+    // }
 
     // edit record
-    public function editRecordLeave(Request $request)
-    {
-        DB::beginTransaction();
-        try {
+    // public function editRecordLeave(Request $request)
+    // {
+    //     DB::beginTransaction();
+    //     try {
 
-            $from_date = new DateTime($request->from_date);
-            $to_date = new DateTime($request->to_date);
-            $day     = $from_date->diff($to_date);
-            $days    = $day->d;
+    //         $from_date = new DateTime($request->from_date);
+    //         $to_date = new DateTime($request->to_date);
+    //         $day     = $from_date->diff($to_date);
+    //         $days    = $day->d;
 
-            $update = [
-                'id'           => $request->id,
-                'leave_type'   => $request->leave_type,
-                'from_date'    => $request->from_date,
-                'to_date'      => $request->to_date,
-                'day'          => $days,
-                'leave_reason' => $request->leave_reason,
-            ];
+    //         $update = [
+    //             'id'           => $request->id,
+    //             'leave_type'   => $request->leave_type,
+    //             'from_date'    => $request->from_date,
+    //             'to_date'      => $request->to_date,
+    //             'day'          => $days,
+    //             'leave_reason' => $request->leave_reason,
+    //         ];
 
-            LeavesAdmin::where('id',$request->id)->update($update);
-            DB::commit();
-            Toastr::success('Updated Leaves successfully :)','Success');
-            return redirect()->back();
-        } catch(\Exception $e) {
-            DB::rollback();
-            Toastr::error('Update Leaves fail :)','Error');
-            return redirect()->back();
-        }
-    }
+    //         LeavesAdmin::where('id',$request->id)->update($update);
+    //         DB::commit();
+    //         Toastr::success('Updated Leaves successfully :)','Success');
+    //         return redirect()->back();
+    //     } catch(\Exception $e) {
+    //         DB::rollback();
+    //         Toastr::error('Update Leaves fail :)','Error');
+    //         return redirect()->back();
+    //     }
+    // }
 
     // delete record
-    public function deleteLeave(Request $request)
-    {
-        try {
+    // public function deleteLeave(Request $request)
+    // {
+    //     try {
 
-            LeavesAdmin::destroy($request->id);
-            Toastr::success('Leaves admin deleted successfully :)','Success');
-            return redirect()->back();
+    //         LeavesAdmin::destroy($request->id);
+    //         Toastr::success('Leaves admin deleted successfully :)','Success');
+    //         return redirect()->back();
 
-        } catch(\Exception $e) {
+    //     } catch(\Exception $e) {
 
-            DB::rollback();
-            Toastr::error('Leaves admin delete fail :)','Error');
-            return redirect()->back();
-        }
-    }
+    //         DB::rollback();
+    //         Toastr::error('Leaves admin delete fail :)','Error');
+    //         return redirect()->back();
+    //     }
+    // }
 
     // leaveSettings
     public function leaveSettings()

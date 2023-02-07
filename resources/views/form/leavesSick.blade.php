@@ -9,10 +9,10 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title">Leave Permit <span id="year"></span></h3>
+                        <h3 class="page-title">Sick Leaves <span id="year"></span></h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                            <li class="breadcrumb-item active">Leaves</li>
+                            <li class="breadcrumb-item active">Sick Leaves</li>
                         </ul>
                     </div>
                     {{-- <div class="col-auto float-right ml-auto">
@@ -122,8 +122,8 @@
                             </thead>
 
                             <tbody>
-                                @if(!empty($leaves))
-                                    @foreach ($leaves as $items )
+                                @if(!empty($sick))
+                                    @foreach ($sick as $items )
                                         <tr>
                                             <td>
                                                 <h2 class="table-avatar">

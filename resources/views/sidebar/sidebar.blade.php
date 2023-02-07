@@ -16,7 +16,7 @@
                     <ul style="{{ request()->is('/*') ? 'display: block;' : 'display: none;' }}">
                         <li><a class="{{set_active(['home'])}}" href="{{ route('home') }}">Summary Dashboard</a></li>
                         <li><a class="{{set_active(['form/leaves/new'])}}" href="{{ route('form/leaves/new') }}">Leave Permit</a></li>
-                        <li><a class="{{set_active(['form/leaves/new'])}}" href="#">Sick Leave</a></li>
+                        <li><a class="{{set_active(['form/leaves/new'])}}" href="{{ route('form/leaves_sick')}}">Sick Leave</a></li>
 
                     </ul>
                 </li>
@@ -145,11 +145,20 @@
                 <li class="menu-title"> <span>Menu Admin</span> </li>
                 <li class="{{set_active(['employee/profile/*'])}} submenu">
                     <a href="#"><i class="la la-user"></i>
-                        <span>Admin Profile</span> <span class="menu-arrow"></span>
+                        <span>Profile</span> <span class="menu-arrow"></span>
                     </a>
                     <ul style="display: none;">
                         <li><a class="{{set_active(['employee/profile/*'])}}" href="{{ route('all/employee/admin_reg') }}">Regist Administrator</a></li>
-                        <li><a class="{{set_active(['employee/profile/*'])}}" href="#">Abaikan Dulu</a></li>
+                        {{-- <li><a class="{{set_active(['employee/profile/*'])}}" href="#">Abaikan Dulu</a></li> --}}
+                    </ul>
+                </li>
+                <li class="{{set_active(['employee/profile/*'])}} submenu">
+                    <a href="#"><i class="la la-user"></i>
+                        <span>Report</span> <span class="menu-arrow"></span>
+                    </a>
+                    <ul style="display: none;">
+                        <li><a class="{{set_active(['employee/profile/*'])}}" href="{{ route('all/employee/admin_reg') }}">Report Excel</a></a></li>
+                        <li><a class="{{set_active(['employee/profile/*'])}}" href="{{ route('all/employee/admin_reg') }}">Report PDF</a></a></li>
                     </ul>
                 </li>
             </ul>

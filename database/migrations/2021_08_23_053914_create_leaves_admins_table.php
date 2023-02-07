@@ -13,7 +13,7 @@ class CreateLeavesAdminsTable extends Migration
      */
     public function up()
     {
-        Schema::create('leaves_admins', function (Blueprint $table) {
+        Schema::create('leaves_admin', function (Blueprint $table) {
             $table->id();
             $table->string('user_id')->nullable();
             $table->string('leave_type')->nullable();
@@ -32,6 +32,6 @@ class CreateLeavesAdminsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('leaves_admins');
+        Schema::dropIfExists('leaves_admin');
     }
 }

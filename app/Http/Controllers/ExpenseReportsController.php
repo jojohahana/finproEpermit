@@ -18,7 +18,7 @@ class ExpenseReportsController extends Controller
     {
         return view('reports.invoicereports');
     }
-    
+
     // daily report page
     public function dailyReport()
     {
@@ -28,9 +28,9 @@ class ExpenseReportsController extends Controller
     // leave reports page
     public function leaveReport()
     {
-        $leaves = DB::table('leaves_admins')
-                    ->join('users', 'users.user_id', '=', 'leaves_admins.user_id')
-                    ->select('leaves_admins.*', 'users.*')
+        $leaves = DB::table('leaves_admin')
+                    ->join('users', 'users.user_id', '=', 'leaves_admin.user_id')
+                    ->select('leaves_admin.*', 'users.*')
                     ->get();
         return view('reports.leavereports',compact('leaves'));
     }
