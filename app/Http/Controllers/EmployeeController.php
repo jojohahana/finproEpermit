@@ -23,7 +23,10 @@ class EmployeeController extends Controller
 
     // 1. INDEX PAGE REGISTER USERS
     public function daftarAllEmployee() {
-        $employee = DB::table('employee')->where('data_status', '=','ACTIVE')->get();
+        $employee = DB::table('employee')
+        ->where('data_status', '=','ACTIVE')
+        ->where('role_type','=',null)
+        ->get();
         $userList = DB::table('users')->get();
         $deptList = DB::table('departments')->get();
         $permission_lists = DB::table('permission_lists')->get();
@@ -86,15 +89,14 @@ class EmployeeController extends Controller
                 'phone_number'=>$request->phone_number_edit,
             ];
 
-            // User::where('id',$request->id)->update($updateUser);
             Employee::where('id',$request->id_edit)->update($updateEmployee);
 
             DB::commit();
-            Toastr::success('updated Employee successfully :)','Success');
+            Toastr::success('Updated Employee successfully :)','Success');
             return redirect()->route('all/employee/regist');
         }catch(\Exception $e){
             DB::rollback();
-            Toastr::error('updated record fail :)','Error');
+            Toastr::error('Updated Employee Fail :(','Error');
             return redirect()->back();
         }
     }
@@ -120,15 +122,27 @@ class EmployeeController extends Controller
     }
 
     //  5. VIEW DATA USERS
-    public function viewRecord($employee_id)
-    {
-        $permission = DB::table('employee')
-            ->join('module_permissions', 'employee.employee_id', '=', 'module_permission.employee_id')
-            ->select('employee.*', 'module_permissions.*')
-            ->where('employee.employee_id','=',$employee_id)
-            ->get();
-        $employee = DB::table('employee')->where('employee_id',$employee_id)->get();
-        return view('form.edit.editemployee',compact('employee','permission'));
+    public function viewRecord(Request $request) {
+        DB::beginTranscation();
+        try{
+            $viewEmployee = [
+                'name' =>$request->name_edit,
+                'position'=>$request->position_edit,
+                'department'=>$request->department_edit,
+                'rfid_tag'=>$request->rfid_tag_edit,
+                'email'=>$request->email_edit,
+                'phone_number'=>$request->phone_number_edit,
+            ];
+            Employee::where('id',$request->id_edit)->update($updateEmployee);
+
+            DB::commit();
+            Toastr::success('Updated Employee successfully :)','Success');
+            return redirect()->route('all/employee/regist');
+        }catch(\Exception $e){
+            DB::rollback();
+            Toastr::error('Updated Employee Fail :(','Error');
+            return redirect()->back();
+        }
     }
 
         // ===== REGISTER USERS E-PERMIT | KARYAWAN =====
@@ -162,7 +176,7 @@ class EmployeeController extends Controller
         'rfid_tag'      => 'required|string|max:100',
     ]);
 
-    $admin = Employee::where('role_type', '=',$request->role_type)->first();
+    $admin = Employee::where('employee_id', '=',$request->employee_id)->first();
     if ($admin === null) {
         $admin = new Employee;
         $admin->employee_id     = $request->employee_id;
@@ -188,68 +202,78 @@ class EmployeeController extends Controller
 
    }
 
-    //3. EDIT & UPDATE USERS
+    //3. EDIT & UPDATE ADMIN
     public function updateAdmin(Request $request) {
         DB::beginTransaction();
         try{
             $updateAdmin = [
                 'name'=>$request->nameAdmin_edit,
+                'email'=>$request->emailAdmin_edit,
                 'department'=>$request->deptAdmin_edit,
                 'position'=>$request->positionAdmin_edit,
                 'join_date'=>$request->joindateAdm_edit,
                 'phone_number'=>$request->phoneNum_edit,
+                // 'employee_id'=>$request->employeeid_edit,
                 'role_type'=>$request->role_type_edit,
+                'rfid_tag'=>$request->rfidTag_edit,
             ];
+
+            Employee::where('id',$request->id_edit)->update($updateAdmin);
+
+            DB::commit();
+            Toastr::success('Updated Admin Successfully :)','Success');
+            return redirect()->route('all/employee/admin_reg');
         }catch(\Exception $e){
             DB::rollback();
-            Toastr::error('updated record fail :)','Error');
+            Toastr::error('Updated Admin Fail :(','Error');
             return redirect()->back();
         }
     }
 
-    // all employee card view
-    // public function cardAllEmployee(Request $request)
-    // {
-    //     $employee = DB::table('employee')->where('data_status', '=','ACTIVE')->get();
-    //     $userList = DB::table('users')->get();
-    //     $permission_lists = DB::table('permission_lists')->get();
-    //     return view('form.allemployeecard',compact('employee','userList','permission_lists'));
-    // }
-    // all employee list
-    // Yohana Ngulik
-    // public function listAllEmployee()
-    // {
-    //     $employee = DB::table('employee')->where('data_status', '=','ACTIVE')->get();
-    //     $userList = DB::table('users')->get();
-    //     $permission_lists = DB::table('permission_lists')->get();
-    //     return view('form.employeelist',compact('employee','userList','permission_lists'));
-    // }
+    // 4 DELETE & NON ACTIVE ADMIN
+    public function deleteAdmin($employee_id) {
+        DB::beginTransaction();
+        try{
+            Employee::where('id',$employee_id)
+            ->update(['data_status' => 'NOT ACTIVE']);
 
-    // ++++ YOHANA BIKIN SENDIRI +++
-    // Yohana Ngulik - Trial bikin function untuk regis employee
+            DB::commit();
+            Toastr::success('Delete Admin Successfully :)','Success');
+            return redirect()->route('all/employee/admin_reg');
+        }catch(\Exception $e){
+            DB::rollback();
+            Toastr::error('Delete Admin Fail :)','Error');
+            return redirect()->back();
+        }
+    }
 
+    // 5. VIEW DATA ADMIN
+    public function viewAdmin(Request $request) {
+        DB::beginTransaction();
+        try{
+            $updateAdmin = [
+                'name'=>$request->nameAdmin_edit,
+                'email'=>$request->emailAdmin_edit,
+                'department'=>$request->deptAdmin_edit,
+                'position'=>$request->positionAdmin_edit,
+                'join_date'=>$request->joindateAdm_edit,
+                'phone_number'=>$request->phoneNum_edit,
+                // 'employee_id'=>$request->employeeid_edit,
+                'role_type'=>$request->role_type_edit,
+                'rfid_tag'=>$request->rfidTag_edit,
+            ];
 
-    // public function saveRegisEmployee(Request $request) {
-    //     DB::beginTransaction();
+            Employee::where('id',$request->id_edit)->update($updateAdmin);
 
-    //     $request->validate([
-    //         'name'          =>'required|string|max:255',
-    //         'email'         =>'required|string|email',
-    //         'department'    =>'required|string|max:255',
-    //         'position'      =>'required|string|max:255',
-    //         'join_date'     =>'required|string|max:255',
-    //         'phone_number'  =>'required|string|max:255',
-    //         'rfid_tag'      =>'required|string|max:255',
-    //         'employee_id'   =>'required|string|max:4',
-    //     ]);
-    // }
-
-
-
-
-
-
-
+            DB::commit();
+            Toastr::success('Updated Admin Successfully :)','Success');
+            return redirect()->route('all/employee/admin_reg');
+        }catch(\Exception $e){
+            DB::rollback();
+            Toastr::error('Updated Admin Fail :(','Error');
+            return redirect()->back();
+        }
+    }
 
 
 
@@ -336,7 +360,7 @@ class EmployeeController extends Controller
     }
     public function employeeListSearch(Request $request)
     {
-        $users = DB::table('users')
+        $users = DB::table('employee')
                     ->join('employee', 'users.user_id', '=', 'employee.employee_id')
                     ->select('users.*', 'employee.birth_date', 'employee.gender', 'employee.company')
                     ->get();

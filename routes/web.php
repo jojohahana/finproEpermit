@@ -178,10 +178,14 @@ Route::controller(EmployeeController::class)->group(function () {
     Route::get('all/employee/regist', 'daftarAllEmployee')->middleware('auth')->name('all/employee/regist');
     Route::post('all/employee/save', 'saveRecord')->middleware('auth')->name('all/employee/save'); // --Yohana Ngulik  --//
     Route::post('all/employee/update', 'updateRecord')->middleware('auth')->name('all/employee/update');
-    Route::get('all/employee/delete/{employee_id}', 'deleteRecord')->middleware('auth');
+    Route::get('all/employee/view', 'viewRecord')->middleware('auth')->name('all/employee/view');
+    Route::post('all/employee/delete/{employee_id}', 'deleteRecord')->middleware('auth');
     // Registrasi Administrator Epermit
     Route::get('all/employee/admin_reg', 'indexRegAdmin')->middleware('auth')->name('all/employee/admin_reg');
     Route::post('all/employee/admin_reg/save', 'saveAdmin')->middleware('auth')->name('all/employee/admin_reg/save');
+    Route::post('all/employee/admin/update', 'updateAdmin')->middleware('auth')->name('all/employee/admin/update');
+    Route::get('all/employee/admin/view', 'viewAdmin')->middleware('auth')->name('all/employee/admin/view');
+    Route::post('all/employee/admin/delete/{employee_id}', 'deleteAdmin')->middleware('auth');
 
 
     Route::get('all/employee/card', 'cardAllEmployee')->middleware('auth')->name('all/employee/card');

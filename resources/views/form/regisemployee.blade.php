@@ -94,8 +94,7 @@
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                             <div class="dropdown-menu dropdown-menu-right">
                                                 <a class="dropdown-item upd_employee" href="#" data-toggle="modal" data-target="#update_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                <!-- Yohana Ngulik Nambahin Button View -->
-                                                <a class="dropdown-item" href="{{ url('all/employee/view/edit/'.$items->id) }}"><i class="fa fa-eye m-r-5"></i> View</a>
+                                                {{-- <a class="dropdown-item" href="{{ url('all/employee/view/edit/'.$items->id) }}"><i class="fa fa-eye m-r-5"></i> View</a> --}}
                                                 <a class="dropdown-item" href="{{url('all/employee/delete/'.$items->id)}}"onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                             </div>
                                         </div>
@@ -298,6 +297,7 @@
             </div>
         </div>
 
+
         <!-- Update Employee Modal -->
         <div id="update_employee" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -411,7 +411,6 @@
         <!-- /Update Employee Modal -->
 
 
-        <!-- /View Employee Modal -->
     </div>
     <!-- /Page Wrapper -->
     @section('script')

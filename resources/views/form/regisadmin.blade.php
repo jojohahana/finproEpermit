@@ -11,17 +11,12 @@
                     <div class="col">
                         <h3 class="page-title">Register Admin E-Permit</h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Admin Profile</a></li>
+                            <li class="breadcrumb-item"><a href="#">Admin Profile</a></li>
                             <li class="breadcrumb-item active">Regis Admin</li>
                         </ul>
                     </div>
                     <div class="col-auto float-right ml-auto">
                         <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_employee"><i class="fa fa-plus"></i> Regis Admin</a>
-                        <!-- YOHANA NGULIK RUBAH ROUTE NYA  -->
-                        {{-- <div class="view-icons">
-                            <a href="{{ route('all/employee/regist') }}" class="grid-view btn btn-link active"><i class="fa fa-th"></i></a>
-                            <a href="{{ route('all/employee/regist') }}" class="list-view btn btn-link"><i class="fa fa-bars"></i></a>
-                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -37,7 +32,7 @@
                             <label class="focus-label">NIK</label>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-3">
+                    {{-- <div class="col-sm-6 col-md-3">
                         <div class="form-group form-focus">
                             <input type="text" class="form-control floating">
                             <label class="focus-label">Employee Name</label>
@@ -48,7 +43,7 @@
                             <input type="text" class="form-control floating">
                             <label class="focus-label">Position</label>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-sm-6 col-md-3">
                         <button type="sumit" class="btn btn-success btn-block"> Search </button>
                     </div>
@@ -82,13 +77,13 @@
                                 @foreach ($employee as $items )
                                 <tr>
                                     <td hidden class="id">{{ $items->id }}</td>
-                                    <td class="nik_edit">{{ $items->employee_id }}</td>
+                                    <td class="employeeid_edit">{{ $items->employee_id }}</td>
                                     <td class="nameAdmin_edit">{{ $items->name }}</td>
                                     <td class="positionAdmin_edit">{{ $items->position }}</td>
                                     <td class="deptAdmin_edit">{{ $items->department }}</td>
                                     <td class="phoneNum_edit">{{ $items->phone_number }}</td>
                                     <td class="rfidTag_edit">{{ $items->rfid_tag }}</td>
-                                    <td class="email_edit">{{ $items->email }}</td>
+                                    <td class="emailAdmin_edit">{{ $items->email }}</td>
                                     <td class="role_type_edit">{{ $items->role_type }}</td>
                                     <td class="joindateAdm_edit">{{ $items->join_date }}</td>
                                     {{-- <td class="phone_number_edit">{{ $items->phone_number }}</td> --}}
@@ -96,10 +91,9 @@
                                         <div class="dropdown dropdown-action">
                                             <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a class="dropdown-item upd_employee" href="#" data-toggle="modal" data-target="#update_employee"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                <!-- Yohana Ngulik Nambahin Button View -->
-                                                <a class="dropdown-item" href="{{ url('all/employee/view/edit/'.$items->id) }}"><i class="fa fa-eye m-r-5"></i> View</a>
-                                                <a class="dropdown-item" href="{{url('all/employee/delete/'.$items->id)}}"onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                <a class="dropdown-item upd_admin" href="#" data-toggle="modal" data-target="#update_admin"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                {{-- <a class="dropdown-item view_admin" data-toggle="modal" data-target="view_admin" href="#"><i class="fa fa-eye m-r-5"></i> View</a> --}}
+                                                <a class="dropdown-item" data-toggle="modal" data-target="#delete_admin" href="{{url('all/employee/admin/delete/'.$items->id)}}"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                             </div>
                                         </div>
                                     </td>
@@ -114,7 +108,7 @@
         </div>
         <!-- /Page Content -->
 
-        <!-- Add Employee Modal -->
+        <!-- Add Admin Modal -->
         <div id="add_employee" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
@@ -235,8 +229,8 @@
         </div>
         <!-- /Add Employee Modal -->
 
-        <!-- View Employee Modal -->
-        <div id="view_employee" class="modal custom-modal fade" role="dialog">
+        <!-- View Admin Modal -->
+        <div id="view_admin" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -312,8 +306,8 @@
             </div>
         </div>
 
-        <!-- Update Employee Modal -->
-        <div id="update_employee" class="modal custom-modal fade" role="dialog">
+        <!-- Update Admin Modal -->
+        <div id="update_admin" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -323,15 +317,15 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('all/employee/update') }}" method="POST">
+                        <form action="{{ route('all/employee/admin/update') }}" method="post">
                             @csrf
-                            <input type="hidden" name="id_edit" id="em_id" value="">
+                            <input type="hidden" name="id_edit" id="editAdmin_id" value="">
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Full Name</label>
-                                        <input class="form-control @error('name_edit') is-invalid @enderror" type="text" id="name_edit" name="name_edit">
-                                        @error('name_edit')
+                                        <label class="col-form-label">Name <span class="text-danger">*</span></label>
+                                        <input class="form-control @error('nameAdmin_editame') is-invalid @enderror" type="text" id="nameAdmin_edit" name="nameAdmin_edit" autofocus>
+                                        @error('nameAdmin_edit')
                                             <span class="invalid-feedback" roler="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -342,8 +336,8 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                        <input class="form-control @error('email_edit') is-invalid @enderror" type="email" id="email_edit" name="email_edit" placeholder="contoh@gmail.com">
-                                        @error('email_edit')
+                                        <input class="form-control @error('emailAdmin_edit') is-invalid @enderror" type="email" id="emailAdmin_edit" name="emailAdmin_edit">
+                                        @error('emailAdmin_edit')
                                             <span class="invalid-feedback" roler="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -354,44 +348,40 @@
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label>Department <span class="text-danger">*</span></label>
-                                        <select class="select @error('department_edit') is-invalid @enderror" name="department_edit" id="department_edit">
+                                        <select class="select @error('deptAdmin_edit') is-invalid @enderror" name="deptAdmin_edit" id="deptAdmin_edit">
                                         <option selected disabled>-- Select Department --</option>
                                         @foreach ($deptList as $dept)
                                             <option value="{{ $dept->department }}">{{ $dept->department }}</option>
                                         @endforeach
                                     </select>
-                            </div>
+                                    </div>
                                 </div>
-
-
-
 
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="col-form-label">Position <span class="text-danger">*</span></label>
-                                        <input class="form-control @error('position_edit') is-invalid @enderror" type="text" id="position_edit" name="position_edit">
-                                        @error('position_edit')
+                                        <input class="form-control @error('positionAdmin_edit') is-invalid @enderror" type="text" id="positionAdmin_edit" name="positionAdmin_edit">
+                                        @error('positionAdmin_edit')
                                             <span class="invalid-feedback" roler="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                        <!-- harusnya selection  -->
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Join Date</label>
+                                        <label>Join Date <span class="text-danger">*</span></label>
                                         <div class="cal-icon">
-                                            <input class="form-control datetimepicker" type="text" id="join_date_edit" name="join_date_edit">
+                                            <input class="form-control datetimepicker" type="text" id="joindateAdm_edit" name="joindateAdm_edit">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Mobile No</label>
-                                        <input class="form-control @error('phone_number_edit') is-invalid @enderror" type="text" id="phone_number_edit" name="phone_number_edit">
-                                        @error('phone_number_edit')
+                                        <label>Mobile No <span class="text-danger">*</span></label>
+                                        <input class="form-control @error('phoneNum_edit') is-invalid @enderror" type="text" id="phoneNum_edit" name="phoneNum_edit">
+                                        @error('phoneNum_edit')
                                             <span class="invalid-feedback" roler="alert">
                                                 <strong>{{ $message }}</strong>
                                             </span>
@@ -400,19 +390,30 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">RFID Tag</label>
-                                        <input class="form-control @error('rfid_tag_edit') is-invalid @enderror" type="text" id="rfid_tag_edit" name="rfid_tag_edit">
-                                        @error('rfid_tag_edit')
-                                            <span class="invalid-feedback" roler="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
+                                        <label class="col-form-label">NIK <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control @error('employeeid_edit') is-invalid @enderror" id="employeeid_edit" name="employeeid_edit" readonly>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label class="col-form-label">Nomor Induk Karyawan <span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control @error('employee_id_edit') is-invalid @enderror" id="employee_id_edit" name="employee_id_edit" placeholder="NIK" readonly>
+                                        <label class="col-form-label">Role <span class="text-danger">*</span></label>
+                                        <select class="select @error('role_type_edit') is-invalid @enderror" name="role_type_edit" id="role_type_edit">
+                                            <option selected disabled>-- Select Role --</option>
+                                            @foreach ($roleList as $role)
+                                            <option value="{{ $role->role_type }}">{{ $role->role_type }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label class="col-form-label">RFID Tag <span class="text-danger">*</span></label>
+                                        <input class="form-control @error('rfidTag_edit') is-invalid @enderror" type="text" id="rfidTag_edit" name="rfidTag_edit">
+                                        @error('rfidTag_edit')
+                                            <span class="invalid-feedback" roler="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
@@ -427,49 +428,66 @@
         </div>
         <!-- /Update Employee Modal -->
 
-
-        <!-- /View Employee Modal -->
+        <!-- Delete Admin Modal -->
+        <div class="modal custom-modal fade" id="delete_admin" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="form-header">
+                            <h3>Delete Admin</h3>
+                            <p>Are you sure want to delete?</p>
+                        </div>
+                        <div class="modal-btn delete-action">
+                            <form action="{{url('all/employee/admin/delete/'.$items->id)}}" method="POST">
+                                @csrf
+                                <input type="hidden" name="id" class="e_id" value="">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Delete Admin Modal -->
     </div>
     <!-- /Page Wrapper -->
     @section('script')
-    {{-- <script>
-        $("input:checkbox").on('click', function()
-        {
-            var $box = $(this);
-            if ($box.is(":checked"))
-            {
-                var group = "input:checkbox[class='" + $box.attr("class") + "']";
-                $(group).prop("checked", false);
-                $box.prop("checked", true);
-            }
-            else
-            {
-                $box.prop("checked", false);
-            }
-        });
-    </script> --}}
-    {{-- <script>
-        // select auto id and email
-        $('#name').on('change',function()
-        {
-            $('#employee_id').val($(this).find(':selected').data('employee_id'));
-            $('#email').val($(this).find(':selected').data('email'));
-        });
-    </script> --}}
-
-<script>
-        $(document).on('click','.upd_employee',function()
+    <script>
+        $(document).on('click','.upd_admin',function()
         {
             var _this = $(this).parents('tr');
-            $('#em_id').val(_this.find('.id').text());
-            $('#name_edit').val(_this.find('.name_edit').text());
-            $('#position_edit').val(_this.find('.position_edit').text());
-            $('#department_edit').val(_this.find('.department_edit').text());
-            $('#employee_id_edit').val(_this.find('.employee_id_edit').text());
-            $('#rfid_tag_edit').val(_this.find('.rfid_tag_edit').text());
-            $('#email_edit').val(_this.find('.email_edit').text());
-            $('#phone_number_edit').val(_this.find('.phone_number_edit').text());
-            $('#join_date_edit').val(_this.find('.join_date_edit').text());
+            $('#editAdmin_id').val(_this.find('.id').text());
+            $('#nameAdmin_edit').val(_this.find('.nameAdmin_edit').text());
+            $('#emailAdmin_edit').val(_this.find('.emailAdmin_edit').text());
+            $('#deptAdmin_edit').val(_this.find('.deptAdmin_edit').text());
+            $('#positionAdmin_edit').val(_this.find('.positionAdmin_edit').text());
+            $('#joindateAdm_edit').val(_this.find('.joindateAdm_edit').text());
+            $('#phoneNum_edit').val(_this.find('.phoneNum_edit').text());
+            $('#employeeid_edit').val(_this.find('.employeeid_edit').text());
+            $('#role_type_edit').val(_this.find('.role_type_edit').text());
+            $('#rfidTag_edit').val(_this.find('.rfidTag_edit').text());
+        });
+
+        $(document).on('click','.view_admin',function()
+        {
+            var _this = $(this).parents('tr');
+            $('#editAdmin_id').val(_this.find('.id').text());
+            $('#nameAdmin_edit').val(_this.find('.nameAdmin_edit').text());
+            $('#emailAdmin_edit').val(_this.find('.emailAdmin_edit').text());
+            $('#deptAdmin_edit').val(_this.find('.deptAdmin_edit').text());
+            $('#positionAdmin_edit').val(_this.find('.positionAdmin_edit').text());
+            $('#joindateAdm_edit').val(_this.find('.joindateAdm_edit').text());
+            $('#phoneNum_edit').val(_this.find('.phoneNum_edit').text());
+            $('#employeeid_edit').val(_this.find('.employeeid_edit').text());
+            $('#role_type_edit').val(_this.find('.role_type_edit').text());
+            $('#rfidTag_edit').val(_this.find('.rfidTag_edit').text());
         });
     </script>
 
