@@ -25,11 +25,22 @@ class ReportController extends Controller
     }
 
     public function indexPDF() {
-        return view('form.reportPDF');
+        $leaves = DB::table('leaves_admin')
+                    ->join('employee', 'employee.employee_id', '=', 'leaves_admin.user_id')
+                    ->select('leaves_admin.*', 'employee.position','employee.name','employee.department')
+                    ->where('leaves_admin.data_status','=','ACTIVE')
+                    ->get();
+
+        return view('form.reportPDF',compact('leaves'));
     }
 
     public function reportPDF() {
-        $getCuti = LeavesAdmin::get();
+        $getCuti = DB::table('leaves_admin')
+                ->join('employee', 'employee.employee_id', '=', 'leaves_admin.user_id')
+                ->select('leaves_admin.*', 'employee.position','employee.name','employee.department')
+                ->where('leaves_admin.data_status','=','ACTIVE')
+                ->get();
+        // $getCuti = LeavesAdmin::get();
 
         $data = [
             'title' => 'Laporan Izin Cuti',
