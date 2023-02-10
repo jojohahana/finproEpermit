@@ -153,12 +153,12 @@
                     </ul>
                 </li>
                 <li class="{{set_active(['employee/profile/*'])}} submenu">
-                    <a href="#"><i class="la la-user"></i>
+                    <a href="#"><i class="la la-pie-chart"></i>
                         <span>Report</span> <span class="menu-arrow"></span>
                     </a>
                     <ul style="display: none;">
-                        <li><a class="{{set_active(['employee/profile/*'])}}" href="{{ route('all/employee/admin_reg') }}">Report Excel</a></a></li>
-                        <li><a class="{{set_active(['employee/profile/*'])}}" href="{{ route('all/employee/admin_reg') }}">Report PDF</a></a></li>
+                        <li><a class="{{set_active(['employee/profile/*'])}}" href="{{ route('report/generateExcel') }}">Report Excel</a></a></li>
+                        <li><a class="{{set_active(['employee/profile/*'])}}" href="{{ route('report/generatepdf') }}">Report PDF</a></a></li>
                     </ul>
                 </li>
             </ul>

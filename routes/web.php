@@ -22,6 +22,7 @@ use App\Http\Controllers\TrainersController;
 use App\Http\Controllers\TrainingTypeController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\PersonalInformationController;
+use App\Http\Controllers\ReportController;
 
 
 /*
@@ -232,6 +233,14 @@ Route::controller(LeavesController::class)->group(function () {
     Route::post('form/leaves/save', 'saveRecord')->middleware('auth')->name('form/leaves/save');
     Route::post('form/leaves/edit', 'editRecordLeave')->middleware('auth')->name('form/leaves/edit');
     Route::post('form/leaves/edit/delete','deleteLeave')->middleware('auth')->name('form/leaves/edit/delete');
+});
+
+// ----------------------------- Report Controller ----------------------------------------
+Route::controller(ReportController::class)->group(function () {
+    Route::get('report/generatepdf', 'indexPDF')->name('report/generatepdf');
+    Route::get('getreportPdf', 'reportPDF')->name('getreportPdf');
+    Route::get('report/generateExcel', 'indexExcel')->name('report/generateExcel');
+    Route::get('getreportExcel', 'reportExcel')->name('getreportExcel');
 });
 
 // ----------------------------Sub Department Pending Dulu JO -----------------------------------
