@@ -233,6 +233,8 @@ Route::controller(LeavesController::class)->group(function () {
     Route::post('form/leaves/save', 'saveRecord')->middleware('auth')->name('form/leaves/save');
     Route::post('form/leaves/edit', 'editRecordLeave')->middleware('auth')->name('form/leaves/edit');
     Route::post('form/leaves/edit/delete','deleteLeave')->middleware('auth')->name('form/leaves/edit/delete');
+    // Page Approval by Supervisor - Manager Up
+    Route::get('form/leavesApprove', 'leavesApprove')->middleware('auth')->name('form/leavesApprove');
 });
 
 // ----------------------------- Report Controller ----------------------------------------
@@ -241,6 +243,8 @@ Route::controller(ReportController::class)->group(function () {
     Route::get('getreportPdf', 'reportPDF')->name('getreportPdf');
     Route::get('report/generateExcel', 'indexExcel')->name('report/generateExcel');
     Route::get('getreportExcel', 'reportExcel')->name('getreportExcel');
+    Route::post('report/generatepdf/search', 'filterByNik')->name('report/generatepdf/search');
+
 });
 
 // ----------------------------Sub Department Pending Dulu JO -----------------------------------

@@ -13,6 +13,7 @@ use PDF;
 
 class ReportController extends Controller
 {
+    // =========== REPORT EXCEL ===============
     public function indexExcel() {
         $leaves = DB::table('leaves_admin')
                     ->join('employee', 'employee.employee_id', '=', 'leaves_admin.user_id')
@@ -21,9 +22,14 @@ class ReportController extends Controller
                     ->get();
 
         return view('form.reportExcel',compact('leaves'));
-        // return view('form.reportPDF');
     }
 
+    public function reportExcel() {
+        return Excel::download(new LeavesExport, 'testExcel.xlsx');
+    }
+
+
+    // ============ REPORT PDF================
     public function indexPDF() {
         $leaves = DB::table('leaves_admin')
                     ->join('employee', 'employee.employee_id', '=', 'leaves_admin.user_id')
@@ -40,7 +46,6 @@ class ReportController extends Controller
                 ->select('leaves_admin.*', 'employee.position','employee.name','employee.department')
                 ->where('leaves_admin.data_status','=','ACTIVE')
                 ->get();
-        // $getCuti = LeavesAdmin::get();
 
         $data = [
             'title' => 'Laporan Izin Cuti',
@@ -52,7 +57,17 @@ class ReportController extends Controller
         return $pdf->download('testReportCuti.pdf');
     }
 
-    public function reportExcel() {
-        return Excel::download(new LeavesExport, 'testExcel.xlsx');
+    public function filterByNik(Request $request) {
+        if($request->employee_id) {
+            $findNik = DB::table('leaves_admin')
+                    ->join('employee', 'employee.employee_id', '=', 'leaves_admin.user_id')
+                    ->select('leaves_admin.*', 'employee.position','employee.name','employee.department')
+                    ->where('leaves_admin.data_status','=','ACTIVE')
+                    ->where('leaves_admin.user_id','='.$request->user_id)
+                    ->get();
+        }
+
     }
+
+
 }
