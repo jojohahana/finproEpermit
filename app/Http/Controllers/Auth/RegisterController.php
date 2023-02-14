@@ -31,10 +31,10 @@ class RegisterController extends Controller
 
         $dt       = Carbon::now();
         $todayDate = $dt->toDayDateTimeString();
-        
+
         User::create([
             'name'      => $request->name,
-            'avatar'    => $request->image,
+            // 'avatar'    => $request->image,
             'email'     => $request->email,
             'join_date' => $todayDate,
             'role_name' => $request->role_name,

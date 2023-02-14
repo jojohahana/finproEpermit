@@ -65,6 +65,7 @@ Auth::routes();
 // ----------------------------- main dashboard ------------------------------//
 Route::controller(HomeController::class)->group(function () {
     Route::get('/home', 'index')->name('home');
+    Route::get('/homeapproval', 'approvedHome')->name('homeapproval');
     Route::get('em/dashboard', 'emDashboard')->name('em/dashboard');
 });
 
@@ -172,7 +173,7 @@ Route::controller(JobController::class)->group(function () {
 
 });
 
-// -------------------- EMPLOYEE | USER & ADMIN ------------------------------//
+// -------------------- EMPLOYEE DATA | USER & ADMIN ------------------------------//
 Route::controller(EmployeeController::class)->group(function () {
     // +++++++ FINAL FIX ROUTE ++++++++++
     // Registrasi Users Epermit
@@ -195,10 +196,6 @@ Route::controller(EmployeeController::class)->group(function () {
     Route::post('all/employee/search', 'employeeSearch')->name('all/employee/search');
     Route::post('all/employee/list/search', 'employeeListSearch')->name('all/employee/list/search');
 
-    // +++ YOHANA NGULIK BIKIN ROUTE UTK REGISTRASI USER BY EMAIL +++
-    Route::post('all/employee/regist/save', 'saveRegisEmployee')->middleware('auth')->name('all/employee/regist/save');
-
-    // Route::get('all/employee/verify', 'indexVerifEmp')->middleware('auth')->name('all/employee/verify');
     // Route::post('all/employee/verify', 'verifEmployee')->middleware('auth')->name('all/employee/verify');
     // YOHANA NGULIK BIKIN ROUTE SENDIRI END
     Route::get('form/departments/page', 'index')->middleware('auth')->name('form/departments/page');
@@ -235,6 +232,7 @@ Route::controller(LeavesController::class)->group(function () {
     Route::post('form/leaves/edit/delete','deleteLeave')->middleware('auth')->name('form/leaves/edit/delete');
     // Page Approval by Supervisor - Manager Up
     Route::get('form/leavesApprove', 'leavesApprove')->middleware('auth')->name('form/leavesApprove');
+    Route::get('form/sickApprove', 'sickApprove')->middleware('auth')->name('form/sickApprove');
 });
 
 // ----------------------------- Report Controller ----------------------------------------

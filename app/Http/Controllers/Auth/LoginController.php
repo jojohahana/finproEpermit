@@ -49,10 +49,30 @@ class LoginController extends Controller
         ]);
     }
 
-    public function login()
-    {
-        return view('auth.login');
+    public function login(Request $request) {
+        $input = $request->all();
+
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
+        {
+            if(auth()->user()->role_name == 'admin') {
+                return redirect()->route('home');
+            }else  {
+                return redirect()->route('homeapproval'); //selain Admin parsing ke home approval
+            }
+        }else{
+            return redirect()->route('login')
+                ->with('Error', 'Email Address & Password Are Wrong.');
+        }
     }
+    // public function login()
+    // {
+    //     return view('auth.login');
+    // }
 
     public function authenticate(Request $request)
     {
@@ -66,7 +86,7 @@ class LoginController extends Controller
 
         $dt         = Carbon::now();
         $todayDate  = $dt->toDayDateTimeString();
-        
+
         if (Auth::attempt(['email'=> $username,'password'=> $password,'status'=>'Active'])) {
             /** get session */
             $user = Auth::User();
@@ -80,10 +100,10 @@ class LoginController extends Controller
             Session::put('avatar', $user->avatar);
             Session::put('position', $user->position);
             Session::put('department', $user->department);
-            
+
             $activityLog = ['name'=> Session::get('name'),'email'=> $username,'description' => 'Has log in','date_time'=> $todayDate,];
             DB::table('activity_logs')->insert($activityLog);
-            
+
             Toastr::success('Login successfully :)','Success');
             return redirect()->intended('home');
         } else {

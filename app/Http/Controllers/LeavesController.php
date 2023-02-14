@@ -43,6 +43,16 @@ class LeavesController extends Controller
         return view('form.leavesapprove', compact('leaves'));
     }
 
+    public function sickApprove() {
+        $leaves = DB::table('leaves_admin')
+                    ->join('employee', 'employee.employee_id', '=', 'leaves_admin.user_id')
+                    ->select('leaves_admin.*', 'employee.position','employee.name','employee.department')
+                    ->where('leaves_admin.data_status','=','ACTIVE')
+                    ->get();
+
+        return view('form.leavesickapprove', compact('leaves'));
+    }
+
     // public function filterType(Request $request) {
     //     if ($request->ajax()) {
     //         $data = LeavesAdmin::select(*);

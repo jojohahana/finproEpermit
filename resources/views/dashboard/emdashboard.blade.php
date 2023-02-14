@@ -11,13 +11,13 @@
                             <img src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
                         </div>
                         <div class="welcome-det">
-                            <h3>Welcome, {{ Auth::user()->name }}</h3>
+                            <h3>Welcome Employe Dashboard, {{ Auth::user()->name }}</h3>
                             <p>{{ $todayDate }}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col-lg-8 col-md-8">
                     <section class="dash-section">
@@ -225,5 +225,5 @@
         </div>
         <!-- /Page Content -->
     </div>
-    <!-- /Page Wrapper -->  
+    <!-- /Page Wrapper -->
 @endsection

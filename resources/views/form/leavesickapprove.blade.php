@@ -8,10 +8,10 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title">Approval Leave Permit <span id="year"></span></h3>
+                        <h3 class="page-title">Approval Sick Leaves <span id="year"></span></h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Approval</a></li>
-                            <li class="breadcrumb-item active">Leaves Permit</li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Leaves</li>
                         </ul>
                     </div>
                     {{-- <div class="col-auto float-right ml-auto">

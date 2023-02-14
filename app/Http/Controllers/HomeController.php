@@ -24,11 +24,19 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    // main dashboard
+    // Admin Dashboard
     public function index()
     {
         return view('dashboard.dashboard');
     }
+
+    public function approvedHome() {
+        return view ('dashboard.dashboardApproval');
+    }
+
+
+
+
     // employee dashboard
     public function emDashboard()
     {
