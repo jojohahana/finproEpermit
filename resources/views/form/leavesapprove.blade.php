@@ -47,7 +47,7 @@
                             <option> Approved </option>
                             <option> Rejected </option>
                         </select>
-                        <label class="focus-label">Leave Status</label>
+                        <label class="focus-label">Status Approve</label>
                     </div>
                 </div>
                 {{-- Filter By Date  --}}
@@ -82,14 +82,14 @@
                         <table class="table table-striped custom-table mb-0 datatable">
                             <thead>
                                 <tr>
+                                    <th class="text-center">Approve ?</th>
+                                    <th>Status</th>
                                     <th>Employee</th>
                                     <th>Type</th>
                                     <th>From</th>
                                     <th>To</th>
                                     <th>No of Days</th>
                                     <th>Reason</th>
-                                    <th class="text-center">Status</th>
-                                    {{-- <th class="text-right">Actions</th> --}}
                                 </tr>
                             </thead>
 
@@ -97,13 +97,10 @@
                                 @if(!empty($leaves))
                                     @foreach ($leaves as $items )
                                         <tr>
-                                            <td>
-                                                <h2 class="table-avatar">
-                                                    {{-- <a href="{{ url('employee/profile/'.$items->user_id) }}" class="avatar"><img alt="" src="{{ URL::to('/assets/images/'. $items->avatar) }}" alt="{{ $items->name }}"></a> --}}
-                                                    <a href="#">{{ $items->name }}<span>{{ $items->position }}</span></a>
-                                                </h2>
-                                            </td>
                                             <td hidden class="id">{{ $items->id }}</td>
+                                            <td class="text-center"> <a class="dropdown-item update_Status" data-toggle="modal" data-target="#approveLeaves"><i class="fa fa-reply fa-lg"></i></a></td>
+                                            <td class="statusApp_Edit">{{ $items->stat_app1 }}</td>
+                                            <td><h2 class="table-avatar"><a>{{ $items->name }}<span>{{ $items->position }}</span></a></h2></td>
                                             <td class="leave_type">{{$items->leave_type}}</td>
                                             <td hidden class="from_date">{{ $items->from_date }}</td>
                                             <td>{{date('d F, Y',strtotime($items->from_date)) }}</td>
@@ -111,29 +108,6 @@
                                             <td>{{date('d F, Y',strtotime($items->to_date)) }}</td>
                                             <td class="day">{{$items->day}} Day</td>
                                             <td class="leave_reason">{{$items->leave_reason}}</td>
-                                            <td class="text-center">
-                                                <div class="dropdown action-label">
-                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                                        <i class="fa fa-dot-circle-o text-purple"></i> New
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-purple"></i> New</a>
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
-                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#approve_leave"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            {{-- Action Button  --}}
-                                            {{-- <td class="text-right">
-                                                <div class="dropdown dropdown-action">
-                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item leaveUpdate" data-toggle="modal" data-id="'.$items->id.'" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                        <a class="dropdown-item leaveDelete" href="#" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                                    </div>
-                                                </div>
-                                            </td> --}}
                                         </tr>
                                     @endforeach
                                 @endif
@@ -145,62 +119,44 @@
         </div>
         <!-- /Page Content -->
 
+        {{-- Modals Approval  --}}
+        <div id="approveLeaves" class="modal custom-modal-fade" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Update Approval Leaves</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('form/leavesApprove/app1') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="id_Up" id="editStatus_id" value="">
+                                <div class="form-group">
+                                    <select class="select @error('statusApp_Edit') is-invalid @enderror" name="statusApp_Edit" id="statusApp_Edit">
+                                        <option selected disabled>-- Select Status --</option>
+                                        @foreach ($statAppList as $status)
+                                            <option value="{{ $status->status_app}}">{{ $status->status_app}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                            <div class="submit-section">
+                                <button class="btn btn-primary submit-btn">Send Action</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- /Modals Approval  --}}
     </div>
     <!-- /Page Wrapper -->
     @section('script')
-    <script type="text/javascript">
-    // Filter by Search & DropDown
-        $(function () {
-            var table = $('.datatable').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: "{{ route('form/leavesApprove')}}",
-                    data: function (d) {
-                        d.leaveType = $('#filterLeaveType').val(),
-                        d.searchNik = $('#searchByNik').val()
-                    }
-                },
-                columns: [
-                    {data:'id', name:'id'},
-                    {data:'leave_type', name:'leave_type'},
-                    {data:'from_date', name:'from_date'},
-                    {data:'to_date', name:'to_date'},
-                    {data:'day', name:'day'},
-                    {data:'leave_reason', name:'leave_reason'},
-                ];
-            });
-
-            $('#filterLeaveType').change(function(){
-                table.draw();
-            });
-        })
-    </script>
     <script>
-        document.getElementById("year").innerHTML = new Date().getFullYear();
-    </script>
-    {{-- update js --}}
-    <script>
-        $(document).on('click','.leaveUpdate',function()
+        $(document).on('click','.update_Status',function()
         {
             var _this = $(this).parents('tr');
-            $('#e_id').val(_this.find('.id').text());
-            $('#e_number_of_days').val(_this.find('.day').text());
-            $('#e_from_date').val(_this.find('.from_date').text());
-            $('#e_to_date').val(_this.find('.to_date').text());
-            $('#e_leave_reason').val(_this.find('.leave_reason').text());
-
-            var leave_type = (_this.find(".leave_type").text());
-            var _option = '<option selected value="' + leave_type+ '">' + _this.find('.leave_type').text() + '</option>'
-            $( _option).appendTo("#e_leave_type");
-        });
-    </script>
-    {{-- delete model --}}
-    <script>
-        $(document).on('click','.leaveDelete',function()
-        {
-            var _this = $(this).parents('tr');
-            $('.e_id').val(_this.find('.id').text());
+            $('#editStatus_id').val(_this.find('.id').text());
+            $('#statusApp_Edit').val(_this.find('.statusApp_Edit').text());
         });
     </script>
     @endsection

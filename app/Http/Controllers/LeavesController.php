@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\LeavesAdmin;
 use App\Models\LeavesSick;
+use App\Models\StatusApprove;
 use DB;
 use DateTime;
 
@@ -24,6 +25,9 @@ class LeavesController extends Controller
         return view('form.leaves',compact('leaves'));
     }
 
+
+    // +++++++ SICK LEAVES PERMIT +++++++
+    // 1. INDEX SAKIT KARYAWAN
     public function sick_leaves() {
         $sick = DB::table('leaves_sick')
                 ->join('employee', 'employee.employee_id', '=', 'leaves_sick.user_id')
@@ -33,16 +37,44 @@ class LeavesController extends Controller
         return view('form.leavesSick',compact('sick'));
     }
 
+    // ++++++ APPROVAL LEAVES PERMIT +++++++
+    // 1. INDEX APPROVAL CUTI
     public function leavesApprove() {
         $leaves = DB::table('leaves_admin')
                     ->join('employee', 'employee.employee_id', '=', 'leaves_admin.user_id')
-                    ->select('leaves_admin.*', 'employee.position','employee.name','employee.department')
+                    ->select('leaves_admin.*', 'employee.position','employee.name',
+                        'employee.department','leaves_admin.stat_app1','leaves_admin.stat_app2',
+                        'leaves_admin.stat_app3')
                     ->where('leaves_admin.data_status','=','ACTIVE')
+                    ->where('leaves_admin.stat_app1','=','NEW')
+                    // ->where('leaves_admin.stat_app1','=','APPROVE')
                     ->get();
+                    $statAppList = DB::table('status_approve')->get();
 
-        return view('form.leavesapprove', compact('leaves'));
+        return view('form.leavesapprove', compact('leaves','statAppList'));
     }
 
+    public function approveOne(Request $request) {
+        // DB::beginTransaction();
+        try{
+            $updateApprove = [
+                'stat_app1'=>$request->statusApp_Edit,
+            ];
+
+            LeavesAdmin::where('id',$request->id_Up)->update($updateApprove);
+
+            // DB::commit();
+            Toastr::success('Approval Permit Successfully :)','Success');
+            return redirect()->route('form/leavesApprove');
+        }catch(\Exception $e) {
+            // DB::rollback();
+            Toastr::error('Approval Failed :(','Error');
+            return redirect()->back();
+        }
+    }
+
+    // ++++++ APPROVAL SICK LEAVES PERMIT ++++++
+    // 1. INDEX APPROVAL IZIN SAKIT
     public function sickApprove() {
         $leaves = DB::table('leaves_admin')
                     ->join('employee', 'employee.employee_id', '=', 'leaves_admin.user_id')

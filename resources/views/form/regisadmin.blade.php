@@ -230,7 +230,7 @@
         <!-- /Add Employee Modal -->
 
         <!-- View Admin Modal -->
-        <div id="view_admin" class="modal custom-modal fade" role="dialog">
+        {{-- <div id="view_admin" class="modal custom-modal fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -304,7 +304,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Update Admin Modal -->
         <div id="update_admin" class="modal custom-modal fade" role="dialog">
@@ -429,7 +429,7 @@
         <!-- /Update Employee Modal -->
 
         <!-- Delete Admin Modal -->
-        <div class="modal custom-modal fade" id="delete_admin" role="dialog">
+        {{-- <div class="modal custom-modal fade" id="delete_admin" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -454,7 +454,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- /Delete Admin Modal -->
     </div>
     <!-- /Page Wrapper -->

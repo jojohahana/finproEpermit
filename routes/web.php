@@ -233,6 +233,8 @@ Route::controller(LeavesController::class)->group(function () {
     // Page Approval by Supervisor - Manager Up
     Route::get('form/leavesApprove', 'leavesApprove')->middleware('auth')->name('form/leavesApprove');
     Route::get('form/sickApprove', 'sickApprove')->middleware('auth')->name('form/sickApprove');
+    Route::post('form/leavesApprove/app1', 'approveOne')->middleware('auth')->name('form/leavesApprove/app1');
+
 });
 
 // ----------------------------- Report Controller ----------------------------------------
