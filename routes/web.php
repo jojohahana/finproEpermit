@@ -230,10 +230,17 @@ Route::controller(LeavesController::class)->group(function () {
     Route::post('form/leaves/save', 'saveRecord')->middleware('auth')->name('form/leaves/save');
     Route::post('form/leaves/edit', 'editRecordLeave')->middleware('auth')->name('form/leaves/edit');
     Route::post('form/leaves/edit/delete','deleteLeave')->middleware('auth')->name('form/leaves/edit/delete');
-    // Page Approval by Supervisor - Manager Up
-    Route::get('form/leavesApprove', 'leavesApprove')->middleware('auth')->name('form/leavesApprove');
+    // Page Approval by Supervisor - Level 1
+    Route::get('form/leavesApprove', 'leavesApprove1')->middleware('auth')->name('form/leavesApprove');
     Route::get('form/sickApprove', 'sickApprove')->middleware('auth')->name('form/sickApprove');
     Route::post('form/leavesApprove/app1', 'approveOne')->middleware('auth')->name('form/leavesApprove/app1');
+    Route::post('form/leavesApprove/dec1', 'declineOne')->middleware('auth')->name('form/leavesApprove/dec1');
+    // Page Approval by Manager - Level 2
+    Route::get('form/leavesApprove2', 'leavesApprove2')->middleware('auth')->name('form/leavesApprove2');
+    Route::post('form/leavesApprove/app2', 'approveTwo')->middleware('auth')->name('form/leavesApprove/app2');
+    // Trial Approval by Boolean
+    Route::get('updateStatus', 'testDttable')->name('updateStatus');
+
 
 });
 
