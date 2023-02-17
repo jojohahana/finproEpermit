@@ -20,7 +20,7 @@
                 </div>
             </div>
             <!-- Search Filter -->
-            <div class="row filter-row">
+            {{-- <div class="row filter-row">
                 <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                     <div class="form-group form-focus">
                         <input id="searchByNik" type="text" class="form-control floating">
@@ -50,27 +50,11 @@
                         <label class="focus-label">Status Approve</label>
                     </div>
                 </div>
-                {{-- Filter By Date  --}}
-                {{-- <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                    <div class="form-group form-focus">
-                        <div class="cal-icon">
-                            <input class="form-control floating datetimepicker" type="text">
-                        </div>
-                        <label class="focus-label">From</label>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                    <div class="form-group form-focus">
-                        <div class="cal-icon">
-                            <input class="form-control floating datetimepicker" type="text">
-                        </div>
-                        <label class="focus-label">To</label>
-                    </div>
-                </div> --}}
+
                 <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                     <a href="#" class="btn btn-success btn-block"> Search </a>
                 </div>
-            </div>
+            </div> --}}
             <!-- /Search Filter -->
 
 			<!-- /Page Header -->
@@ -98,9 +82,18 @@
                                     @foreach ($leaves as $items )
                                         <tr>
                                             <td hidden class="id">{{ $items->id }}</td>
-                                            <td class="text-center"> <a class="dropdown-item update_Status" data-toggle="modal" data-target="#approveLeaves"><i class="fa fa-reply fa-lg"></i></a></td>
+                                            <td class="text-center">
+                                                <div class="dropdown dropdown-action">
+                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-eye fa-lg"></i></i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item" href="{{url('form/leavesApprove/app1/acc/'.$items->id)}}"onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-check m-r-5"></i> Approve</a>
+                                                        <a class="dropdown-item" href="{{url('form/leavesApprove/app1/decline/'.$items->id)}}"onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash-o m-r-5"></i> Decline</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            {{-- <td class="text-center"> <a class="dropdown-item update_Status" data-toggle="modal" data-target="#approveLeaves"><i class="fa fa-reply fa-lg"></i></a></td> --}}
                                             {{-- <td class="statusApp_Edit">{{ $items->stat_app2 }}</td> --}}
-                                            <td class="statusApp_Edit">{{ $items->stat_app1 }}</td>
+                                            <td class="statusApp_Edit">{{ $items->stat_app2 }}</td>
                                             <td hidden class="statusHidd_Edit">{{ $items->stat_app3 }}</td>
                                             <td><h2 class="table-avatar"><a>{{ $items->name }}<span>{{ $items->position }}</span></a></h2></td>
                                             <td class="leave_type">{{$items->leave_type}}</td>
@@ -122,7 +115,7 @@
         <!-- /Page Content -->
 
         {{-- Modals Approval  --}}
-        <div id="approveLeaves" class="modal custom-modal-fade" role="dialog">
+        {{-- <div id="approveLeaves" class="modal custom-modal-fade" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -148,7 +141,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         {{-- /Modals Approval  --}}
     </div>
     <!-- /Page Wrapper -->

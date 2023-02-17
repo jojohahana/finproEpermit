@@ -48,68 +48,45 @@ class LeavesController extends Controller
                         'leaves_admin.stat_app3')
                     ->where('leaves_admin.data_status','=','ACTIVE')
                     ->where('leaves_admin.stat_app1','=','NEW')
-                    ->where('leaves_admin.stat_app2','=',NULL)
+                    ->where('leaves_admin.stat_app2','=','Wait')
                     ->get();
-                    $statAppList = DB::table('status_approve')->get();
 
-        return view('form.leavesapprove', compact('leaves','statAppList'));
+        return view('form.leavesapprove', compact('leaves'));
     }
 
     // 2. APPROVE LEVEL 1
-    public function approveOne(Request $request) {
+    public function approveOne($employee_id) {
         // DB::beginTransaction();
         try{
-            $updateApprove = [
-                'stat_app2'=>$request->statusApp_Edit,
-                'stat_app3'=>$request->statusHidd_Edit,
-            ];
-
-            LeavesAdmin::where('id',$request->id_Up)->update($updateApprove);
+            LeavesAdmin::where('id',$employee_id)
+                ->update(['stat_app2' => 'Approve']);
 
             // DB::commit();
-            Toastr::success('Approve Leaves Success:)','Success');
+            Toastr::success('Decline Permit Success :)','Success');
             return redirect()->route('form/leavesApprove');
-        }catch(\Exception $e) {
+        }catch(\Exception $e){
             // DB::rollback();
-            Toastr::error('Approval Failed :(','Error');
+            Toastr::error('Decline Permit Fail :)','Error');
             return redirect()->back();
         }
     }
 
     // 3. DECLINE LEVEL 1
-    public function declineOne($approve1) {
-        DB::beginTransaction();
+    public function declineOne($employee_id) {
+        // DB::beginTransaction();
         try{
             LeavesAdmin::where('id',$employee_id)
-            ->update(['stat_app2' => 'NOT ACTIVE']);
+                ->update(['data_status' => 'NOT ACTIVE']);
 
-            DB::commit();
+            // DB::commit();
             Toastr::success('Decline Permit Success :)','Success');
             return redirect()->route('form/leavesApprove');
         }catch(\Exception $e){
-            DB::rollback();
+            // DB::rollback();
             Toastr::error('Decline Permit Fail :)','Error');
             return redirect()->back();
         }
     }
-    // public function declineOne(Request $request) {
-    //     // DB::beginTransaction();
-    //     try{
-    //         $updateApprove = [
-    //             'stat_app2'=>$request->statusApp_Edit,
-    //         ];
-
-    //         LeavesAdmin::where('id',$request->id_Up)->update($updateApprove);
-
-    //         // DB::commit();
-    //         Toastr::success('Decline Leaves Success:)','Success');
-    //         return redirect()->route('form/leavesApprove');
-    //     }catch(\Exception $e) {
-    //         // DB::rollback();
-    //         Toastr::error('Approval Failed :(','Error');
-    //         return redirect()->back();
-    //     }
-    // }
 
     // 2. INDEX APPROVAL CUTI - LEVEL 2 - MANAGER
     public function leavesApprove2() {
@@ -119,68 +96,50 @@ class LeavesController extends Controller
                         'employee.department','leaves_admin.stat_app1','leaves_admin.stat_app2',
                         'leaves_admin.stat_app3')
                     ->where('leaves_admin.data_status','=','ACTIVE')
-                    ->where('leaves_admin.stat_app1','=','NEW')
-                    ->where('leaves_admin.stat_app2','=','APPROVE')
+                    ->where('leaves_admin.stat_app2','=','Approve')
+                    // ->where('leaves_admin.stat_app3','=','Wait')
                     ->get();
-                    $statAppList = DB::table('status_approve')->get();
 
-        return view('form.leavesapprove2', compact('leaves','statAppList'));
+        return view('form.leavesapprove2', compact('leaves'));
     }
 
-    public function testDttable(Request $request) {
-        if ($request->ajax()) {
-            $data = DB::table('leaves_admin')
-                    ->join('employee', 'employee.employee_id', '=', 'leaves_admin.user_id')
-                    ->select('leaves_admin.*', 'employee.position','employee.name',
-                        'employee.department')
-                    ->where('leaves_admin.data_status','=','ACTIVE')
-                    ->where('leaves_admin.stat_app1','=','NEW')
-                    ->addIndexColumn()
-                    ->addColumn('status', function($row) {
-                        if($row->status) {
-                            return '<span class="btn btn-outline-success mb-0">Active</span>';
-                        }else{
-                            return '<span class="btn btn-outline-danger mb-0">Deactive</span>';
-                        }
-                    })
-                    ->filter(function ($instance) use ($request) {
-                        if ($request->get('status') == '0' || $request->get('status') == '1') {
-                            $instance->where('status', $request->get('status'));
-                        }
-                        if (!empty($request->get('search'))) {
-                            $instance->where(function($w) use($request){
-                                $search = $request->get('search');
-                                $w->orWhere('name', 'LIKE', "%$search%")
-                                ->orWhere('type', 'LIKE', "%$search%");
-                            });
-                        }
-                    })
-                    ->rawColumns(['status'])
-                    ->make(true);
-        }
 
-        return view('updateStatus');
-    }
 
-    // 3. APPROVAL LEVEL 2
-    public function approveTwo(Request $request) {
+    // 2.1. APPROVAL LEVEL 2
+    public function approveTwo($employee_id) {
         // DB::beginTransaction();
         try{
-            $updateApprove = [
-                'stat_app3'=>$request->statusApp_Edit,
-            ];
-
-            LeavesAdmin::where('id',$request->id_Up2)->update($updateApprove);
+            LeavesAdmin::where('id',$employee_id)
+                ->update(['stat_app3' => 'Approve']);
 
             // DB::commit();
-            Toastr::success('Approve Leaves Success:)','Success');
+            Toastr::success('Decline Permit Success :)','Success');
             return redirect()->route('form/leavesApprove2');
-        }catch(\Exception $e) {
+        }catch(\Exception $e){
             // DB::rollback();
-            Toastr::error('Approval Failed :(','Error');
+            Toastr::error('Decline Permit Fail :)','Error');
             return redirect()->back();
         }
     }
+
+    // 2.2 DECLINE LEVEL 2
+    public function declineTwo($employee_id) {
+        // DB::beginTransaction();
+        try{
+            LeavesAdmin::where('id',$employee_id)
+                ->update(['data_status' => 'NOT ACTIVE']);
+
+            // DB::commit();
+            Toastr::success('Decline Permit Success :)','Success');
+            return redirect()->route('form/leavesApprove2');
+        }catch(\Exception $e){
+            // DB::rollback();
+            Toastr::error('Decline Permit Fail :)','Error');
+            return redirect()->back();
+        }
+    }
+
+
 
 
 
