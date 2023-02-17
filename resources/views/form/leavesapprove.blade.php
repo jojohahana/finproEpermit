@@ -86,15 +86,15 @@
                                                 <div class="dropdown dropdown-action">
                                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-eye fa-lg"></i></i></a>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="{{url('form/leavesApprove/app1/acc/'.$items->id)}}"onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-check m-r-5"></i> Approve</a>
-                                                        <a class="dropdown-item" href="{{url('form/leavesApprove/app1/decline/'.$items->id)}}"onclick="return confirm('Are you sure to want to delete it?')"><i class="fa fa-trash-o m-r-5"></i> Decline</a>
+                                                        <a class="dropdown-item" href="{{url('form/leavesApprove/app1/acc/'.$items->id)}}"onclick="return confirm('Are you sure to want to approve it?')"><i class="fa fa-check m-r-5"></i> Approve</a>
+                                                        <a class="dropdown-item" href="{{url('form/leavesApprove/app1/decline/'.$items->id)}}"onclick="return confirm('Are you sure to want to decline it?')"><i class="fa fa-trash-o m-r-5"></i> Decline</a>
                                                     </div>
                                                 </div>
                                             </td>
                                             {{-- <td class="text-center"> <a class="dropdown-item update_Status" data-toggle="modal" data-target="#approveLeaves"><i class="fa fa-reply fa-lg"></i></a></td> --}}
                                             {{-- <td class="statusApp_Edit">{{ $items->stat_app2 }}</td> --}}
                                             <td class="statusApp_Edit">{{ $items->stat_app2 }}</td>
-                                            <td hidden class="statusHidd_Edit">{{ $items->stat_app3 }}</td>
+                                            <td hidden class="statusHidd_Edit">{{ $items->stat_app2 }}</td>
                                             <td><h2 class="table-avatar"><a>{{ $items->name }}<span>{{ $items->position }}</span></a></h2></td>
                                             <td class="leave_type">{{$items->leave_type}}</td>
                                             <td hidden class="from_date">{{ $items->from_date }}</td>

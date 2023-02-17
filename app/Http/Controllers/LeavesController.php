@@ -62,11 +62,11 @@ class LeavesController extends Controller
                 ->update(['stat_app2' => 'Approve']);
 
             // DB::commit();
-            Toastr::success('Decline Permit Success :)','Success');
+            Toastr::success('Approve Permit Success :)','Success');
             return redirect()->route('form/leavesApprove');
         }catch(\Exception $e){
             // DB::rollback();
-            Toastr::error('Decline Permit Fail :)','Error');
+            Toastr::error('Approve Permit Fail :)','Error');
             return redirect()->back();
         }
     }
@@ -97,7 +97,7 @@ class LeavesController extends Controller
                         'leaves_admin.stat_app3')
                     ->where('leaves_admin.data_status','=','ACTIVE')
                     ->where('leaves_admin.stat_app2','=','Approve')
-                    // ->where('leaves_admin.stat_app3','=','Wait')
+                    ->where('leaves_admin.stat_app3','=','Wait')
                     ->get();
 
         return view('form.leavesapprove2', compact('leaves'));
@@ -113,11 +113,11 @@ class LeavesController extends Controller
                 ->update(['stat_app3' => 'Approve']);
 
             // DB::commit();
-            Toastr::success('Decline Permit Success :)','Success');
+            Toastr::success('Approve Permit Success :)','Success');
             return redirect()->route('form/leavesApprove2');
         }catch(\Exception $e){
             // DB::rollback();
-            Toastr::error('Decline Permit Fail :)','Error');
+            Toastr::error('Approve Permit Fail :)','Error');
             return redirect()->back();
         }
     }

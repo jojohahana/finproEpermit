@@ -79,27 +79,27 @@
 
                             <tbody>
                                 @if(!empty($leaves))
-                                    @foreach ($leaves as $items2 )
+                                    @foreach ($leaves as $items )
                                         <tr>
-                                            <td hidden class="id">{{ $items2->id }}</td>
+                                            <td hidden class="id">{{ $items->id }}</td>
                                             <td class="text-center">
                                                 <div class="dropdown dropdown-action">
                                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-eye fa-lg"></i></i></a>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="{{url('form/leavesApprove/app2/acc/'.$items2->id)}}"onclick="return confirm('Are you sure to want to approve it?')"><i class="fa fa-check m-r-5"></i> Approve</a>
-                                                        <a class="dropdown-item" href="{{url('form/leavesApprove/app2/decline/'.$items2->id)}}"onclick="return confirm('Are you sure to want to decline it?')"><i class="fa fa-trash-o m-r-5"></i> Decline</a>
+                                                        <a class="dropdown-item" href="{{url('form/leavesApprove/app2/acc/'.$items->id) }}"onclick="return confirm('Are you sure to want to approve it?')"><i class="fa fa-check m-r-5"></i> Approve</a>
+                                                        <a class="dropdown-item" href="{{url('form/leavesApprove/app2/decline/'.$items->id) }}"onclick="return confirm('Are you sure to want to decline it?')"><i class="fa fa-trash-o m-r-5"></i> Decline</a>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="statusApp_Edit">{{ $items2->stat_app3 }}</td>
-                                            <td><h2 class="table-avatar"><a>{{ $items2->name }}<span>{{ $items2->position }}</span></a></h2></td>
-                                            <td class="leave_type">{{$items2->leave_type}}</td>
-                                            <td hidden class="from_date">{{ $items2->from_date }}</td>
-                                            <td>{{date('d F, Y',strtotime($items2->from_date)) }}</td>
-                                            <td hidden class="to_date">{{$items2->to_date}}</td>
-                                            <td>{{date('d F, Y',strtotime($items2->to_date)) }}</td>
-                                            <td class="day">{{$items2->day}} Day</td>
-                                            <td class="leave_reason">{{$items2->leave_reason}}</td>
+                                            <td class="statusApp_Edit">{{ $items->stat_app3 }}</td>
+                                            <td><h2 class="table-avatar"><a>{{ $items->name }}<span>{{ $items->position }}</span></a></h2></td>
+                                            <td class="leave_type">{{$items->leave_type}}</td>
+                                            <td hidden class="from_date">{{ $items->from_date }}</td>
+                                            <td>{{date('d F, Y',strtotime($items->from_date)) }}</td>
+                                            <td hidden class="to_date">{{$items->to_date}}</td>
+                                            <td>{{date('d F, Y',strtotime($items->to_date)) }}</td>
+                                            <td class="day">{{$items->day}} Day</td>
+                                            <td class="leave_reason">{{$items->leave_reason}}</td>
                                         </tr>
                                     @endforeach
                                 @endif
@@ -131,7 +131,7 @@
                                         <a class="btn btn-primary continue-btn" href="javascript:void(0);">Approve</a>
                                     </div>
                                     <div class="col-6">
-                                        <a class="btn btn-primary continue-btn" href="{{ url('form/leavesApprove/app2/decline/'.$items2->id) }}" onclick="return confirm('Yakin Decline ?')">Decline</a>
+                                        <a class="btn btn-primary continue-btn" href="{{ url('form/leavesApprove/app2/decline/'.$items->id) }}" onclick="return confirm('Yakin Decline ?')">Decline</a>
                                     </div>
                                 </div>
                             {{-- </form> --}}
