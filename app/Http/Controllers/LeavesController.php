@@ -147,14 +147,42 @@ class LeavesController extends Controller
     public function sickApprove() {
         $leaves = DB::table('leaves_sick')
                     ->join('employee', 'employee.employee_id', '=', 'leaves_sick.user_id')
-                    ->select('leaves_sick.*', 'employee.position','employee.name','employee.department','leaves_sick.stat_app1',
-                        'leaves_sick.stat_app2','leaves_sick.stat_app3')
+                    ->select('leaves_sick.*', 'employee.position','employee.name','employee.department',
+                        'leaves_sick.stat_app1','leaves_sick.stat_app2','leaves_sick.stat_app3')
                     ->where('leaves_sick.data_status','=','ACTIVE')
-                    ->orWhere('leaves_sick.stat_app1','=','NEW')
-                    ->orWhere('leaves_sick.stat_app2','=','Wait')
+                    ->where('leaves_sick.stat_app1','=','NEW')
+                    ->where('leaves_sick.stat_app2','=','Wait')
                     ->get();
 
         return view('form.leavesickapprove', compact('leaves'));
+    }
+
+    public function approveSickOne($employee_id) {
+        try{
+            LeavesSick::where('id',$employee_id)
+                ->update(['stat_app2' => 'Approve']);
+
+            Toastr::success('Approve Permit Success :)', 'Success');
+            return redirect()->route('form/sickApprove');
+        }catch(\Exception $e) {
+            Toastr::error('Approve Permit Fail :)','Error');
+            return redirect()->back();
+        }
+    }
+
+    public function declineSickOne($employee_id) {
+        try{
+            LeavesSick::where('id',$employee_id)
+                ->update(['data_status' => 'NOT ACTIVE']);
+
+            // DB::commit();
+            Toastr::success('Decline Permit Success :)','Success');
+            return redirect()->route('form/sickApprove');
+        }catch(\Exception $e){
+            // DB::rollback();
+            Toastr::error('Decline Permit Fail :)','Error');
+            return redirect()->back();
+        }
     }
 
     // 2. INDE APPROVAL IZIN SAKIT LEVEL 2
@@ -164,13 +192,44 @@ class LeavesController extends Controller
                     ->select('leaves_sick.*', 'employee.position','employee.name','employee.department','leaves_sick.stat_app1',
                         'leaves_sick.stat_app2','leaves_sick.stat_app3')
                     ->where('leaves_sick.data_status','=','ACTIVE')
-                    ->orWhere('leaves_sick.stat_app2','=','Approve')
-                    ->orWhere('leaves_sick.stat_app3','=','Wait')
+                    ->where('leaves_sick.stat_app2','=','Approve')
+                    ->where('leaves_sick.stat_app3','=','Wait')
                     ->get();
 
         return view('form.leavesickapprove2', compact('leaves'));
     }
 
+    public function approveSickTwo($employee_id) {
+        // DB::beginTransaction();
+        try{
+            LeavesSick::where('id',$employee_id)
+                ->update(['stat_app3' => 'Approve']);
+
+            // DB::commit();
+            Toastr::success('Approve Permit Success :)','Success');
+            return redirect()->route('form/sickApprove2');
+        }catch(\Exception $e){
+            // DB::rollback();
+            Toastr::error('Approve Permit Fail :)','Error');
+            return redirect()->back();
+        }
+    }
+
+    public function declineSickTwo($employee_id) {
+        // DB::beginTransaction();
+        try{
+            LeavesSick::where('id',$employee_id)
+                ->update(['data_status' => 'NOT ACTIVE']);
+
+            // DB::commit();
+            Toastr::success('Decline Permit Success :)','Success');
+            return redirect()->route('form/leavesApprove2');
+        }catch(\Exception $e){
+            // DB::rollback();
+            Toastr::error('Decline Permit Fail :)','Error');
+            return redirect()->back();
+        }
+    }
 
 
     // leaveSettings

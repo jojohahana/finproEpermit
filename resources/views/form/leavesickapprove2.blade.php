@@ -50,8 +50,8 @@
                                                 <div class="dropdown dropdown-action">
                                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-eye fa-lg"></i></i></a>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="{{url('form/leavesApprove/app1/acc/'.$items->id)}}"onclick="return confirm('Are you sure to want to approve it?')"><i class="fa fa-check m-r-5"></i> Approve</a>
-                                                        <a class="dropdown-item" href="{{url('form/leavesApprove/app1/decline/'.$items->id)}}"onclick="return confirm('Are you sure to want to decline it?')"><i class="fa fa-trash-o m-r-5"></i> Decline</a>
+                                                        <a class="dropdown-item" href="{{url('form/sickApprove/app2/acc/'.$items->id)}}"onclick="return confirm('Are you sure to want to approve it?')"><i class="fa fa-check m-r-5"></i> Approve</a>
+                                                        <a class="dropdown-item" href="{{url('form/sickApprove/app2/decline/'.$items->id)}}"onclick="return confirm('Are you sure to want to decline it?')"><i class="fa fa-trash-o m-r-5"></i> Decline</a>
                                                     </div>
                                                 </div>
                                             </td>

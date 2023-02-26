@@ -235,11 +235,16 @@ Route::controller(LeavesController::class)->group(function () {
     Route::get('form/leavesApprove/app1/acc/{employee_id}', 'approveOne')->middleware('auth');
     Route::get('form/leavesApprove/app1/decline/{employee_id}', 'declineOne')->middleware('auth');
     Route::get('form/sickApprove', 'sickApprove')->middleware('auth')->name('form/sickApprove');
+    Route::get('form/sickApprove/app1/acc/{employee_id}', 'approveSickOne')->middleware('auth');
+    Route::get('form/sickApprove/app1/decline/{employee_id}', 'declineSickOne')->middleware('auth');
     // Page Approval by Manager - Level 2
     Route::get('form/leavesApprove2', 'leavesApprove2')->middleware('auth')->name('form/leavesApprove2');
     Route::get('form/leavesApprove/app2/acc/{employee_id}', 'approveTwo')->middleware('auth');
     Route::get('form/leavesApprove/app2/decline/{employee_id}', 'declineTwo')->middleware('auth');
     Route::get('form/sickApprove2', 'sickApprove2')->middleware('auth')->name('form/sickApprove2');
+    Route::get('form/sickApprove/app2/acc/{employee_id}', 'approveSickTwo')->middleware('auth');
+    Route::get('form/sickApprove/app2/decline/{employee_id}', 'declineSickTwo')->middleware('auth');
+
     // Trial Approval by Boolean
     Route::get('updateStatus', 'testDttable')->name('updateStatus');
 
