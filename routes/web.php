@@ -239,7 +239,7 @@ Route::controller(LeavesController::class)->group(function () {
     Route::get('form/leavesApprove2', 'leavesApprove2')->middleware('auth')->name('form/leavesApprove2');
     Route::get('form/leavesApprove/app2/acc/{employee_id}', 'approveTwo')->middleware('auth');
     Route::get('form/leavesApprove/app2/decline/{employee_id}', 'declineTwo')->middleware('auth');
-
+    Route::get('form/sickApprove2', 'sickApprove2')->middleware('auth')->name('form/sickApprove2');
     // Trial Approval by Boolean
     Route::get('updateStatus', 'testDttable')->name('updateStatus');
 

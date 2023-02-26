@@ -142,109 +142,36 @@ class LeavesController extends Controller
 
 
 
-
     // ++++++ APPROVAL SICK LEAVES PERMIT ++++++
-    // 1. INDEX APPROVAL IZIN SAKIT
+    // 1. INDEX APPROVAL IZIN SAKIT LEVEL 1
     public function sickApprove() {
-        $leaves = DB::table('leaves_admin')
-                    ->join('employee', 'employee.employee_id', '=', 'leaves_admin.user_id')
-                    ->select('leaves_admin.*', 'employee.position','employee.name','employee.department')
-                    ->where('leaves_admin.data_status','=','ACTIVE')
+        $leaves = DB::table('leaves_sick')
+                    ->join('employee', 'employee.employee_id', '=', 'leaves_sick.user_id')
+                    ->select('leaves_sick.*', 'employee.position','employee.name','employee.department','leaves_sick.stat_app1',
+                        'leaves_sick.stat_app2','leaves_sick.stat_app3')
+                    ->where('leaves_sick.data_status','=','ACTIVE')
+                    ->orWhere('leaves_sick.stat_app1','=','NEW')
+                    ->orWhere('leaves_sick.stat_app2','=','Wait')
                     ->get();
 
         return view('form.leavesickapprove', compact('leaves'));
     }
 
-    // public function filterType(Request $request) {
-    //     if ($request->ajax()) {
-    //         $data = LeavesAdmin::select(*);
-    //         return
-    //     }
-    // }
-    // save record
-    // public function saveRecord(Request $request)
-    // {
-    //     $request->validate([
-    //         'leave_type'   => 'required|string|max:255',
-    //         'from_date'    => 'required|string|max:255',
-    //         'to_date'      => 'required|string|max:255',
-    //         'leave_reason' => 'required|string|max:255',
-    //     ]);
+    // 2. INDE APPROVAL IZIN SAKIT LEVEL 2
+    public function sickApprove2() {
+        $leaves = DB::table('leaves_sick')
+                    ->join('employee', 'employee.employee_id', '=', 'leaves_sick.user_id')
+                    ->select('leaves_sick.*', 'employee.position','employee.name','employee.department','leaves_sick.stat_app1',
+                        'leaves_sick.stat_app2','leaves_sick.stat_app3')
+                    ->where('leaves_sick.data_status','=','ACTIVE')
+                    ->orWhere('leaves_sick.stat_app2','=','Approve')
+                    ->orWhere('leaves_sick.stat_app3','=','Wait')
+                    ->get();
 
-    //     DB::beginTransaction();
-    //     try {
+        return view('form.leavesickapprove2', compact('leaves'));
+    }
 
-    //         $from_date = new DateTime($request->from_date);
-    //         $to_date = new DateTime($request->to_date);
-    //         $day     = $from_date->diff($to_date);
-    //         $days    = $day->d;
 
-    //         $leaves = new LeavesAdmin;
-    //         $leaves->user_id        = $request->user_id;
-    //         $leaves->leave_type    = $request->leave_type;
-    //         $leaves->from_date     = $request->from_date;
-    //         $leaves->to_date       = $request->to_date;
-    //         $leaves->day           = $days;
-    //         $leaves->leave_reason  = $request->leave_reason;
-    //         $leaves->save();
-
-    //         DB::commit();
-    //         Toastr::success('Create new Leaves successfully :)','Success');
-    //         return redirect()->back();
-    //     } catch(\Exception $e) {
-    //         DB::rollback();
-    //         Toastr::error('Add Leaves fail :)','Error');
-    //         return redirect()->back();
-    //     }
-    // }
-
-    // edit record
-    // public function editRecordLeave(Request $request)
-    // {
-    //     DB::beginTransaction();
-    //     try {
-
-    //         $from_date = new DateTime($request->from_date);
-    //         $to_date = new DateTime($request->to_date);
-    //         $day     = $from_date->diff($to_date);
-    //         $days    = $day->d;
-
-    //         $update = [
-    //             'id'           => $request->id,
-    //             'leave_type'   => $request->leave_type,
-    //             'from_date'    => $request->from_date,
-    //             'to_date'      => $request->to_date,
-    //             'day'          => $days,
-    //             'leave_reason' => $request->leave_reason,
-    //         ];
-
-    //         LeavesAdmin::where('id',$request->id)->update($update);
-    //         DB::commit();
-    //         Toastr::success('Updated Leaves successfully :)','Success');
-    //         return redirect()->back();
-    //     } catch(\Exception $e) {
-    //         DB::rollback();
-    //         Toastr::error('Update Leaves fail :)','Error');
-    //         return redirect()->back();
-    //     }
-    // }
-
-    // delete record
-    // public function deleteLeave(Request $request)
-    // {
-    //     try {
-
-    //         LeavesAdmin::destroy($request->id);
-    //         Toastr::success('Leaves admin deleted successfully :)','Success');
-    //         return redirect()->back();
-
-    //     } catch(\Exception $e) {
-
-    //         DB::rollback();
-    //         Toastr::error('Leaves admin delete fail :)','Error');
-    //         return redirect()->back();
-    //     }
-    // }
 
     // leaveSettings
     public function leaveSettings()

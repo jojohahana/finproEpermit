@@ -42,7 +42,8 @@
                     <ul style="{{ request()->is('/*') ? 'display: block;' : 'display: none;' }}">
                         <li><a class="{{set_active(['form/leavesApprove'])}}" href="{{ route('form/leavesApprove') }}">Approval 1 Leave Permit</a></li>
                         <li><a class="{{set_active(['form/leavesApprove2'])}}" href="{{ route('form/leavesApprove2') }}">Approval 2 Leave Permit</a></li>
-                        <li><a class="{{set_active(['form/sickApprove'])}}" href="{{ route('form/sickApprove') }}">Approval Sick Leave</a></li>
+                        <li><a class="{{set_active(['form/sickApprove'])}}" href="{{ route('form/sickApprove') }}">Approval 1 Sick Leave</a></li>
+                        <li><a class="{{set_active(['form/sickApprove2'])}}" href="{{ route('form/sickApprove2') }}">Approval 2 Sick Leave</a></li>
                         <!-- <li><a class="{{set_active(['expenses/page'])}}" href="{{ route('expenses/page') }}">Expenses</a></li> -->
                     </ul>
                 </li>

@@ -15,6 +15,9 @@ class LeavesSick extends Model
         'from_date',
         'to_date',
         'day',
+        'stat_app1',
+        'stat_app2',
+        'stat_app3',
         'data_status',
     ];
 
