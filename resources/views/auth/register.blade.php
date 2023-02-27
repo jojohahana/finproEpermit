@@ -13,7 +13,7 @@
                     <div class="account-wrapper">
                         <h3 class="account-title">Register</h3>
                         <p class="account-subtitle">Access to our dashboard</p>
-                        
+
                         <!-- Account Form -->
                         <form method="POST" action="{{ route('register') }}">
                             @csrf

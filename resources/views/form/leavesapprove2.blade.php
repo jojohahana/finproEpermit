@@ -1,4 +1,4 @@
-@extends('layouts.masterapproval')
+@extends('layouts.masterapproval2')
 @section('content')
     <!-- Page Wrapper -->
     <div class="page-wrapper">

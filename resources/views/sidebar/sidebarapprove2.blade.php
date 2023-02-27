@@ -9,7 +9,7 @@
                     </h1>
                 </li>
 
-                @if (Auth::user()->role_name=='Supervisor')
+                @if (Auth::user()->role_name=='Manager')
                     <li class="menu-title"> <span>Authentication</span> </li>
                     <li class="{{set_active(['search/user/list','userManagement','activity/log','activity/login/logout'])}} submenu">
                         <a href="#" class="{{ set_active(['search/user/list','userManagement','activity/log','activity/login/logout']) ? 'noti-dot' : '' }}">
@@ -23,7 +23,7 @@
                     </li>
                 @endif
 
-                <li class="menu-title"> <span>Menu Approval Supervisor</span> </li>
+                <li class="menu-title"> <span>Menu Approval Manager</span> </li>
                 <li class="{{set_active(['create/estimate/page','form/estimates/page','payments','expenses/page'])}} submenu">
                     <a href="#" class="{{ set_active(['create/estimate/page','form/estimates/page','payments','expenses/page']) ? 'noti-dot' : '' }}">
                         <i class="la la-edit"></i>
@@ -31,10 +31,10 @@
                         <span class="menu-arrow"></span>
                     </a>
                     <ul style="{{ request()->is('/*') ? 'display: block;' : 'display: none;' }}">
-                        <li><a class="{{set_active(['form/leavesApprove'])}}" href="{{ route('form/leavesApprove') }}">Approval 1 Leave Permit</a></li>
-                        {{-- <li><a class="{{set_active(['form/leavesApprove2'])}}" href="{{ route('form/leavesApprove2') }}">Approval 2 Leave Permit</a></li> --}}
-                        <li><a class="{{set_active(['form/sickApprove'])}}" href="{{ route('form/sickApprove') }}">Approval 1 Sick Leave</a></li>
-                        {{-- <li><a class="{{set_active(['form/sickApprove2'])}}" href="{{ route('form/sickApprove2') }}">Approval 2 Sick Leave</a></li> --}}
+                        {{-- <li><a class="{{set_active(['form/leavesApprove'])}}" href="{{ route('form/leavesApprove') }}">Approval 1 Leave Permit</a></li> --}}
+                        <li><a class="{{set_active(['form/leavesApprove2'])}}" href="{{ route('form/leavesApprove2') }}">Approval 2 Leave Permit</a></li>
+                        {{-- <li><a class="{{set_active(['form/sickApprove'])}}" href="{{ route('form/sickApprove') }}">Approval 1 Sick Leave</a></li> --}}
+                        <li><a class="{{set_active(['form/sickApprove2'])}}" href="{{ route('form/sickApprove2') }}">Approval 2 Sick Leave</a></li>
                         <!-- <li><a class="{{set_active(['expenses/page'])}}" href="{{ route('expenses/page') }}">Expenses</a></li> -->
                     </ul>
                 </li>
