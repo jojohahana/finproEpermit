@@ -34,7 +34,8 @@ class LeavesExport implements FromCollection, WithHeadings
                         'leaves_admin.from_date',
                         'leaves_admin.to_date',
                         'leaves_admin.day',
-                        'leaves_admin.leave_reason')
+                        'leaves_admin.leave_reason',
+                        'leaves_admin.category')
                 ->where('leaves_admin.data_status','=','ACTIVE')
                 ->get();
     }
@@ -48,7 +49,8 @@ class LeavesExport implements FromCollection, WithHeadings
             "Start Izin",
             "Izin Sampai",
             "Lama Izin",
-            "Alasan Izin"
+            "Alasan Izin",
+            "Kategori"
         ];
     }
 }

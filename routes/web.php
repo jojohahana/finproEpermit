@@ -253,10 +253,10 @@ Route::controller(LeavesController::class)->group(function () {
 
 // ----------------------------- Report Controller ----------------------------------------
 Route::controller(ReportController::class)->group(function () {
-    Route::get('report/generatepdf', 'indexPDF')->name('report/generatepdf');
+    Route::get('report/leaves', 'indexReportLeave')->name('report/leaves');
     Route::get('getreportPdf', 'reportPDF')->name('getreportPdf');
-    Route::get('report/generateExcel', 'indexExcel')->name('report/generateExcel');
     Route::get('getreportExcel', 'reportExcel')->name('getreportExcel');
+    Route::get('report/sickLeave', 'indexReportSick')->name('report/sickLeave');
     Route::post('report/generatepdf/search', 'filterByNik')->name('report/generatepdf/search');
 
 });

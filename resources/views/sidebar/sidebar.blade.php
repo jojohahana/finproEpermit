@@ -93,8 +93,8 @@
                         <span>Report</span> <span class="menu-arrow"></span>
                     </a>
                     <ul style="display: none;">
-                        <li><a class="{{set_active(['employee/profile/*'])}}" href="{{ route('report/generateExcel') }}">Report Excel</a></a></li>
-                        <li><a class="{{set_active(['employee/profile/*'])}}" href="{{ route('report/generatepdf') }}">Report PDF</a></a></li>
+                        <li><a class="{{set_active(['employee/profile/*'])}}" href="{{ route('report/sickLeave') }}">Report Sick Leaves</a></a></li>
+                        <li><a class="{{set_active(['employee/profile/*'])}}" href="{{ route('report/leaves') }}">Report Leaves</a></a></li>
                     </ul>
                 </li>
             </ul>

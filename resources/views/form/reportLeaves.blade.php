@@ -8,10 +8,10 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title">Report Leave Excel <span id="year"></span></h3>
+                        <h3 class="page-title">Report Leave Employee <span id="year"></span></h3>
                         <ul class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">Report</a></li>
-                            <li class="breadcrumb-item active">Excel Format</li>
+                            <li class="breadcrumb-item"><a href="{{ route('home') }}">Report</a></li>
+                            <li class="breadcrumb-item active">All Leaves</li>
                         </ul>
                     </div>
                     {{-- <div class="col-auto float-right ml-auto">
@@ -29,45 +29,12 @@
                         <label class="focus-label">Enter NIK</label>
                     </div>
                 </div>
-                {{-- <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                    <div class="form-group form-focus select-focus">
-                        <select class="select floating">
-                            <option> -- Select -- </option>
-                            <option>Leave Permit</option>
-                            <option>Sick Leave</option>
-                        </select>
-                        <label class="focus-label">Leave Type</label>
-                    </div>
+
+                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                    <a href="{{ route('getreportPdf')}}" class="btn btn-primary btn-block"> Download PDF </a>
                 </div>
                 <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                    <div class="form-group form-focus select-focus">
-                        <select class="select floating">
-                            <option> -- Select -- </option>
-                            <option> Pending </option>
-                            <option> Approved </option>
-                            <option> Rejected </option>
-                        </select>
-                        <label class="focus-label">Leave Status</label>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                    <div class="form-group form-focus">
-                        <div class="cal-icon">
-                            <input class="form-control floating datetimepicker" type="text">
-                        </div>
-                        <label class="focus-label">From</label>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                    <div class="form-group form-focus">
-                        <div class="cal-icon">
-                            <input class="form-control floating datetimepicker" type="text">
-                        </div>
-                        <label class="focus-label">To</label>
-                    </div>
-                </div> --}}
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                    <a href="{{ route('getreportExcel')}}" class="btn btn-success btn-block"> Download </a>
+                    <a href="{{ route('getreportExcel')}}" class="btn btn-success btn-block"> Download Excel </a>
                 </div>
             </div>
             <!-- /Search Filter -->
@@ -87,7 +54,7 @@
                                     <th>To</th>
                                     <th>No of Days</th>
                                     <th>Reason</th>
-                                    <th class="text-center">Status</th>
+                                    <th>Category</th>
                                     {{-- <th class="text-right">Actions</th> --}}
                                 </tr>
                             </thead>
@@ -110,19 +77,8 @@
                                             <td>{{date('d F, Y',strtotime($items->to_date)) }}</td>
                                             <td class="day">{{$items->day}} Day</td>
                                             <td class="leave_reason">{{$items->leave_reason}}</td>
-                                            <td class="text-center">
-                                                <div class="dropdown action-label">
-                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                                        <i class="fa fa-dot-circle-o text-purple"></i> New
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-purple"></i> New</a>
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
-                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#approve_leave"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            <td class="category">{{$items->category}}</td>
+
                                             {{-- Button Action Disabled  --}}
                                             {{-- <td class="text-right">
                                                 <div class="dropdown dropdown-action">
@@ -141,38 +97,11 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <!-- /Page Content -->
     </div>
     <!-- /Page Wrapper -->
     @section('script')
-    <script>
-        document.getElementById("year").innerHTML = new Date().getFullYear();
-    </script>
-    {{-- update js --}}
-    <script>
-        $(document).on('click','.leaveUpdate',function()
-        {
-            var _this = $(this).parents('tr');
-            $('#e_id').val(_this.find('.id').text());
-            $('#e_number_of_days').val(_this.find('.day').text());
-            $('#e_from_date').val(_this.find('.from_date').text());
-            $('#e_to_date').val(_this.find('.to_date').text());
-            $('#e_leave_reason').val(_this.find('.leave_reason').text());
 
-            var leave_type = (_this.find(".leave_type").text());
-            var _option = '<option selected value="' + leave_type+ '">' + _this.find('.leave_type').text() + '</option>'
-            $( _option).appendTo("#e_leave_type");
-        });
-    </script>
-    {{-- delete model --}}
-    <script>
-        $(document).on('click','.leaveDelete',function()
-        {
-            var _this = $(this).parents('tr');
-            $('.e_id').val(_this.find('.id').text());
-        });
-    </script>
     @endsection
 @endsection

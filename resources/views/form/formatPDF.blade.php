@@ -17,7 +17,7 @@
             <th>Sampai Tgl</th>
             <th>Hari Izin</th>
             <th>Alasan Izin</th>
-            <th>Status</th>
+            <th>Kategori</th>
         </tr>
         @foreach($getCuti as $getRepCuti)
             <tr>
@@ -27,7 +27,7 @@
                 <td>{{ $getRepCuti->to_date }}</td>
                 <td>{{ $getRepCuti->day }}</td>
                 <td>{{ $getRepCuti->leave_reason }}</td>
-                <td>{{ $getRepCuti->data_status }}</td>
+                <td>{{ $getRepCuti->category }}</td>
             </tr>
         @endforeach
     </table>

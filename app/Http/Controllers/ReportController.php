@@ -14,30 +14,31 @@ use PDF;
 class ReportController extends Controller
 {
     // =========== REPORT EXCEL ===============
-    public function indexExcel() {
-        $leaves = DB::table('leaves_admin')
-                    ->join('employee', 'employee.employee_id', '=', 'leaves_admin.user_id')
-                    ->select('leaves_admin.*', 'employee.position','employee.name','employee.department')
-                    ->where('leaves_admin.data_status','=','ACTIVE')
+    public function indexReportSick() {
+        $leaves = DB::table('leaves_sick')
+                    ->join('employee', 'employee.employee_id', '=', 'leaves_sick.user_id')
+                    ->select('leaves_sick.*', 'employee.position','employee.name','employee.department')
+                    ->where('leaves_sick.data_status','=','ACTIVE')
                     ->get();
 
-        return view('form.reportExcel',compact('leaves'));
+        return view('form.reportSickLeave',compact('leaves'));
+    }
+
+
+
+    // ============ REPORT LEAVES / CUTI ================
+    public function indexReportLeave() {
+        $leaves = DB::table('leaves_admin')
+        ->join('employee', 'employee.employee_id', '=', 'leaves_admin.user_id')
+        ->select('leaves_admin.*', 'employee.position','employee.name','employee.department')
+        ->where('leaves_admin.data_status','=','ACTIVE')
+        ->get();
+
+        return view('form.reportLeaves',compact('leaves'));
     }
 
     public function reportExcel() {
         return Excel::download(new LeavesExport, 'testExcel.xlsx');
-    }
-
-
-    // ============ REPORT PDF================
-    public function indexPDF() {
-        $leaves = DB::table('leaves_admin')
-                    ->join('employee', 'employee.employee_id', '=', 'leaves_admin.user_id')
-                    ->select('leaves_admin.*', 'employee.position','employee.name','employee.department')
-                    ->where('leaves_admin.data_status','=','ACTIVE')
-                    ->get();
-
-        return view('form.reportPDF',compact('leaves'));
     }
 
     public function reportPDF() {
