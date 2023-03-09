@@ -50,7 +50,7 @@
             <!-- /Leave Statistics -->
 
             <!-- Search Filter -->
-            <div class="row filter-row">
+            {{-- <div class="row filter-row">
                 <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                     <div class="form-group form-focus">
                         <input type="text" class="form-control floating">
@@ -98,7 +98,7 @@
                 <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                     <a href="#" class="btn btn-success btn-block"> Search </a>
                 </div>
-            </div>
+            </div> --}}
             <!-- /Search Filter -->
 
 			<!-- /Page Header -->
@@ -111,13 +111,13 @@
                             <thead>
                                 <tr>
                                     <th>Employee</th>
-                                    <th>Leave Type</th>
+                                    <th>NIK</th>
+                                    <th>Sick Type</th>
                                     <th>From</th>
                                     <th>To</th>
                                     <th>No of Days</th>
-                                    <th>Reason</th>
-                                    <th class="text-center">Status</th>
-                                    <th class="text-right">Actions</th>
+                                    <th>Approval 1</th>
+                                    <th>Approval 2</th>
                                 </tr>
                             </thead>
 
@@ -132,35 +132,15 @@
                                                 </h2>
                                             </td>
                                             <td hidden class="id">{{ $items->id }}</td>
-                                            <td class="leave_type">{{$items->leave_type}}</td>
+                                            <td class="user_id">{{$items->user_id}}</td>
+                                            <td class="sick_type">{{$items->sick_type}}</td>
                                             <td hidden class="from_date">{{ $items->from_date }}</td>
                                             <td>{{date('d F, Y',strtotime($items->from_date)) }}</td>
                                             <td hidden class="to_date">{{$items->to_date}}</td>
                                             <td>{{date('d F, Y',strtotime($items->to_date)) }}</td>
                                             <td class="day">{{$items->day}} Day</td>
-                                            <td class="leave_reason">{{$items->leave_reason}}</td>
-                                            <td class="text-center">
-                                                <div class="dropdown action-label">
-                                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                                        <i class="fa fa-dot-circle-o text-purple"></i> New
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-purple"></i> New</a>
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
-                                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#approve_leave"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-right">
-                                                <div class="dropdown dropdown-action">
-                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item leaveUpdate" data-toggle="modal" data-id="'.$items->id.'" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                        <a class="dropdown-item leaveDelete" href="#" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                            <td class="approval1">{{$items->stat_app2}}</td>
+                                            <td class="approval2">{{$items->stat_app3}}</td>
                                         </tr>
                                     @endforeach
                                 @endif
