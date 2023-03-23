@@ -23,18 +23,18 @@
 
             <!-- Search Filter -->
             <div class="row filter-row">
-                <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
+                {{-- <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                     <div class="form-group form-focus">
                         <input type="text" class="form-control floating">
                         <label class="focus-label">Enter NIK</label>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                    <a href="{{ route('getreportExcel')}}" class="btn btn-primary btn-block"> Download PDF </a>
+                    <a href="{{ route('getreportSickPdf')}}" class="btn btn-primary btn-block"> Download PDF </a>
                 </div>
                 <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-                    <a href="{{ route('getreportExcel')}}" class="btn btn-success btn-block"> Download Excel </a>
+                    <a href="{{ route('getreportSickExcel')}}" class="btn btn-success btn-block"> Download Excel </a>
                 </div>
             </div>
             <!-- /Search Filter -->

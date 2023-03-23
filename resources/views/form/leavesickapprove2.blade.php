@@ -57,8 +57,8 @@
                                             </td>
                                             {{-- <td class="text-center"> <a class="dropdown-item update_Status" data-toggle="modal" data-target="#approveLeaves"><i class="fa fa-reply fa-lg"></i></a></td> --}}
                                             {{-- <td class="statusApp_Edit">{{ $items->stat_app2 }}</td> --}}
-                                            <td class="statusApp_Edit">{{ $items->stat_app2 }}</td>
-                                            <td hidden class="statusHidd_Edit">{{ $items->stat_app2 }}</td>
+                                            <td class="statusApp_Edit">{{ $items->stat_app3 }}</td>
+                                            <td hidden class="statusHidd_Edit">{{ $items->stat_app3 }}</td>
                                             <td><h2 class="table-avatar"><a>{{ $items->name }}<span>{{ $items->position }}</span></a></h2></td>
                                             <td class="sick_type">{{$items->sick_type}}</td>
                                             <td hidden class="from_date">{{ $items->from_date }}</td>

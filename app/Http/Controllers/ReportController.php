@@ -24,6 +24,27 @@ class ReportController extends Controller
         return view('form.reportSickLeave',compact('leaves'));
     }
 
+    public function reportSickExcel() {
+        return Excel::download(new LeavesExport, 'ReportSick.xlsx');
+    }
+
+    public function reportSickPDF() {
+        $getSick = DB::table('leaves_sick')
+                ->join('employee', 'employee.employee_id', '=', 'leaves_sick.user_id')
+                ->select('leaves_sick.*', 'employee.position','employee.name','employee.department')
+                ->where('leaves_sick.data_status','=','ACTIVE')
+                ->get();
+
+        $data = [
+            'title'     => 'Laporan Izin Sakit',
+            'date'      => date('d/m/Y'),
+            'getSick'   => $getSick
+        ];
+
+        $pdf = PDF::loadView('form.formatSickPDF', $data)->setPaper('a4','landscape');
+        return $pdf->download('SickReport.pdf');
+    }
+
 
 
     // ============ REPORT LEAVES / CUTI ================
@@ -37,11 +58,11 @@ class ReportController extends Controller
         return view('form.reportLeaves',compact('leaves'));
     }
 
-    public function reportExcel() {
-        return Excel::download(new LeavesExport, 'testExcel.xlsx');
+    public function reportLeavesExcel() {
+        return Excel::download(new LeavesExport, 'ReportLeave.xlsx');
     }
 
-    public function reportPDF() {
+    public function reportLeavesPDF() {
         $getCuti = DB::table('leaves_admin')
                 ->join('employee', 'employee.employee_id', '=', 'leaves_admin.user_id')
                 ->select('leaves_admin.*', 'employee.position','employee.name','employee.department')
@@ -55,7 +76,7 @@ class ReportController extends Controller
         ];
 
         $pdf = PDF::loadView('form.formatPDF', $data)->setPaper('a4','landscape');
-        return $pdf->download('testReportCuti.pdf');
+        return $pdf->download('LeavesReport.pdf');
     }
 
     public function filterByNik(Request $request) {
