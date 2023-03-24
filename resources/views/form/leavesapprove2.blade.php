@@ -8,7 +8,7 @@
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="page-title">Approval Supervisor Leave Permit <span id="year"></span></h3>
+                        <h3 class="page-title">Approval Manager Leave Permit <span id="year"></span></h3>
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Approval</a></li>
                             <li class="breadcrumb-item active">Leaves Permit</li>
@@ -126,14 +126,14 @@
                             {{-- <form action="#" method="post">
                                 @csrf
                                 <input type="hidden" name="id" class="" value=""> --}}
-                                <div class="row">
+                                {{-- <div class="row">
                                     <div class="col-6">
                                         <a class="btn btn-primary continue-btn" href="javascript:void(0);">Approve</a>
                                     </div>
                                     <div class="col-6">
                                         <a class="btn btn-primary continue-btn" href="{{ url('form/leavesApprove/app2/decline/'.$items->id) }}" onclick="return confirm('Yakin Decline ?')">Decline</a>
                                     </div>
-                                </div>
+                                </div> --}}
                             {{-- </form> --}}
                         </div>
                     </div>

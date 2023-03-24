@@ -10,7 +10,7 @@
                 </li>
 
                 @if (Auth::user()->role_name=='Manager')
-                    <li class="menu-title"> <span>Authentication</span> </li>
+                    {{-- <li class="menu-title"> <span>Authentication</span> </li>
                     <li class="{{set_active(['search/user/list','userManagement','activity/log','activity/login/logout'])}} submenu">
                         <a href="#" class="{{ set_active(['search/user/list','userManagement','activity/log','activity/login/logout']) ? 'noti-dot' : '' }}">
                             <i class="la la-user-secret"></i> <span> User Controller</span> <span class="menu-arrow"></span>
@@ -20,7 +20,7 @@
                             <li><a class="{{set_active(['activity/log'])}}" href="{{ route('activity/log') }}">Activity Log</a></li>
                             <li><a class="{{set_active(['activity/login/logout'])}}" href="{{ route('activity/login/logout') }}">Activity User</a></li>
                         </ul>
-                    </li>
+                    </li> --}}
                 @endif
 
                 <li class="menu-title"> <span>Menu Approval Manager</span> </li>
