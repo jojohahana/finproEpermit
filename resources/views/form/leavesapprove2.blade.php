@@ -73,6 +73,7 @@
                                     <th>From</th>
                                     <th>To</th>
                                     <th>No of Days</th>
+                                    <th>Remain of Leaves</th>
                                     <th>Reason</th>
                                 </tr>
                             </thead>
@@ -99,6 +100,7 @@
                                             <td hidden class="to_date">{{$items->to_date}}</td>
                                             <td>{{date('d F, Y',strtotime($items->to_date)) }}</td>
                                             <td class="day">{{$items->day}} Day</td>
+                                            <td class="remain_cuti">{{$items->remain_cuti}} Day</td>
                                             <td class="leave_reason">{{$items->leave_reason}}</td>
                                         </tr>
                                     @endforeach
