@@ -87,7 +87,9 @@
                                     <th>Leave Type</th>
                                     <th>From</th>
                                     <th>To</th>
-                                    <th>No of Days</th>
+                                    <th>Day Leaves</th>
+                                    <th>Ttl Leaves</th>
+                                    <th>Remain Days</th>
                                     <th>Reason</th>
                                     <th>Approval 1</th>
                                     <th>Approval 2</th>
@@ -112,6 +114,8 @@
                                             <td hidden class="to_date">{{$items->to_date}}</td>
                                             <td>{{date('d F, Y',strtotime($items->to_date)) }}</td>
                                             <td class="day">{{$items->day}} Day</td>
+                                            <td class="ttl_leaves">{{$items->day}} Day</td>
+                                            <td class="remain_leaves">{{$items->remain_cuti}} Day</td>
                                             <td class="leave_reason">{{$items->leave_reason}}</td>
                                             <td class="approval1">{{$items->stat_app2}}</td>
                                             <td class="approval2">{{$items->stat_app3}}</td>
