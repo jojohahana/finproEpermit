@@ -138,6 +138,56 @@ class LeavesController extends Controller
             return redirect()->back();
         }
     }
+    // 2. INDEX APPROVAL CUTI - LEVEL 3 - DIREKSI
+    public function leavesApprove3() {
+        $leaves = DB::table('leaves_admin')
+                    ->join('employee', 'employee.employee_id', '=', 'leaves_admin.user_id')
+                    ->select('leaves_admin.*', 'employee.position','employee.name',
+                        'employee.department','leaves_admin.stat_app1','leaves_admin.stat_app2',
+                        'leaves_admin.stat_app3')
+                    ->where('leaves_admin.data_status','=','ACTIVE')
+                    ->where('leaves_admin.stat_app2','=','Approve')
+                    ->where('leaves_admin.stat_app3','=','Wait')
+                    ->get();
+
+        return view('form.leavesapprove3', compact('leaves'));
+    }
+
+
+
+    // 2.1. APPROVAL LEVEL 3
+    public function approveThree($employee_id) {
+        // DB::beginTransaction();
+        try{
+            LeavesAdmin::where('id',$employee_id)
+                ->update(['stat_app3' => 'Approve']);
+
+            // DB::commit();
+            Toastr::success('Approve Permit Success :)','Success');
+            return redirect()->route('form/leavesApprove3');
+        }catch(\Exception $e){
+            // DB::rollback();
+            Toastr::error('Approve Permit Fail :)','Error');
+            return redirect()->back();
+        }
+    }
+
+    // 2.2 DECLINE LEVEL 3
+    public function declineThree($employee_id) {
+        // DB::beginTransaction();
+        try{
+            LeavesAdmin::where('id',$employee_id)
+                ->update(['data_status' => 'NOT ACTIVE']);
+
+            // DB::commit();
+            Toastr::success('Decline Permit Success :)','Success');
+            return redirect()->route('form/leavesApprove3');
+        }catch(\Exception $e){
+            // DB::rollback();
+            Toastr::error('Decline Permit Fail :)','Error');
+            return redirect()->back();
+        }
+    }
 
 
 

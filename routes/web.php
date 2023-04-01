@@ -244,6 +244,10 @@ Route::controller(LeavesController::class)->group(function () {
     Route::get('form/sickApprove2', 'sickApprove2')->middleware('auth')->name('form/sickApprove2');
     Route::get('form/sickApprove/app2/acc/{employee_id}', 'approveSickTwo')->middleware('auth');
     Route::get('form/sickApprove/app2/decline/{employee_id}', 'declineSickTwo')->middleware('auth');
+    // Page Approval by Direktur - Level 3 - Untuk Cuti Non Prosedur
+    Route::get('form/leavesApprove3', 'leavesApprove3')->middleware('auth')->name('form/leavesApprove3');
+    Route::get('form/leavesApprove/app3/acc/{employee_id}', 'approveThree')->middleware('auth');
+    Route::get('form/leavesApprove/app3/decline/{employee_id}', 'declineThree')->middleware('auth');
 
     // Trial Approval by Boolean
     Route::get('updateStatus', 'testDttable')->name('updateStatus');
