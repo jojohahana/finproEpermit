@@ -1,4 +1,4 @@
-@extends('layouts.masterapproval2')
+@extends('layouts.masterapproval3')
 @section('content')
     <!-- Page Wrapper -->
     <div class="page-wrapper">
@@ -52,13 +52,14 @@
                                                     <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-eye fa-lg"></i></i></a>
                                                     <div class="dropdown-menu dropdown-menu-right">
                                                         <a class="dropdown-item" href="{{url('form/leavesApprove/app2/acc/'.$items->id) }}"onclick="return confirm('Are you sure to want to approve it?')"><i class="fa fa-check m-r-5"></i> Approve</a>
-                                                        <a class="dropdown-item" href="{{url('form/leavesApprove/app2/decline/'.$items->id) }}"onclick="return confirm('Are you sure to want to decline it?')"><i class="fa fa-trash-o m-r-5"></i> Decline</a>
+                                                        <a class="dropdown-item" data-toggle="modal" data-target="#decline_leave" href="#"><i class="fa fa-trash-o m-r-5"></i> Decline</a>
+                                                        {{-- <a class="dropdown-item" href="{{url('form/leavesApprove/app2/decline/'.$items->id) }}"onclick="return confirm('Are you sure to want to decline it?')"><i class="fa fa-trash-o m-r-5"></i> Decline</a> --}}
                                                     </div>
                                                 </div>
                                             </td>
                                             <td class="statusApp_Edit">{{ $items->stat_app3 }}</td>
                                             <td><h2 class="table-avatar"><a>{{ $items->name }}<span>{{ $items->position }}</span></a></h2></td>
-                                            <td class="leave_type">{{$items->leave_type}}</td>
+                                            <td class="leave_type">{{$items->category}}</td>
                                             <td hidden class="from_date">{{ $items->from_date }}</td>
                                             <td>{{date('d F, Y',strtotime($items->from_date)) }}</td>
                                             <td hidden class="to_date">{{$items->to_date}}</td>
@@ -78,34 +79,34 @@
         <!-- /Page Content -->
 
         {{-- Modals 2 Button Decline / Approve  --}}
-         <div id="approveLeaves" class="modal custom-modal-fade" role="dialog">
-            <div class="modal-dialog modal-dialog-centered" role="document">
+         <div class="modal custom-modal fade" id="decline_leave" role="dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    {{-- <div class="modal-header">
-                        <h5 class="modal-title">Update Approval Leaves</h5>
-                    </div> --}}
                     <div class="modal-body">
                         <div class="form-header">
-                            <h3>Approve or Decline Permit ?</h3>
+                            <h3>Reason for refunsing leaves</h3>
+                            <div class="form-group">
+                                <textarea rows="4" class="form-control" id="reasonleaves" name="reasonleaves" value=""></textarea>
+                            </div>
                         </div>
                         <div class="modal-btn delete-action">
-                            {{-- <form action="#" method="post">
-                                @csrf
-                                <input type="hidden" name="id" class="" value=""> --}}
-                                {{-- <div class="row">
-                                    <div class="col-6">
-                                        <a class="btn btn-primary continue-btn" href="javascript:void(0);">Approve</a>
-                                    </div>
-                                    <div class="col-6">
-                                        <a class="btn btn-primary continue-btn" href="{{ url('form/leavesApprove/app2/decline/'.$items->id) }}" onclick="return confirm('Yakin Decline ?')">Decline</a>
-                                    </div>
-                                </div> --}}
-                            {{-- </form> --}}
+                            <form action="{{ route('form/leavesApprove3') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" class="nik" value="">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary continue-btn submit-btn">Decline</button>
+                                </div>
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                </div>
+                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+         </div>
         {{-- /Modals 2 Button Decline / Approve  --}}
     </div>
     <!-- /Page Wrapper -->

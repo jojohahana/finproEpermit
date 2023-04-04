@@ -147,7 +147,7 @@ class LeavesController extends Controller
                         'leaves_admin.stat_app3')
                     ->where('leaves_admin.data_status','=','ACTIVE')
                     ->where('leaves_admin.stat_app2','=','Approve')
-                    ->where('leaves_admin.stat_app3','=','Wait')
+                    ->where('leaves_admin.category','=','CNP')
                     ->get();
 
         return view('form.leavesapprove3', compact('leaves'));

@@ -169,6 +169,7 @@ return [
          */
         Barryvdh\Debugbar\ServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Telegram\Bot\Laravel\TelegramServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -199,5 +200,6 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
     ])->toArray(),
     'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+    'Telegram' => Telegram\Bot\Laravel\Facades\Telegram::class,
 
 ];
